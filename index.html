@@ -30,11 +30,6 @@
             background-color: #f4f4f4;
         }
 
-        .highlight {
-            background-color: red; /* Highlight in red */
-            color: white; /* Text color white for better contrast */
-        }
-
         .share-button {
             padding: 10px 20px;
             background-color: #4CAF50;
@@ -105,20 +100,28 @@ function generateTable() {
 
         tableBody.appendChild(row);
     });
+
+    // Check if the URL contains a rank query parameter after the table is generated
+    const urlParams = new URLSearchParams(window.location.search);
+    const rankFromUrl = urlParams.get('rank');
+    if (rankFromUrl) {
+        highlightRank(rankFromUrl);
+    }
 }
 
 // Function to highlight the rank when a link is clicked
 function highlightRank(rank) {
-    // Remove highlight from any previously highlighted row
     const allRows = document.querySelectorAll('#studentTable tbody tr');
     allRows.forEach(row => {
-        row.classList.remove('highlight');
+        // Remove any previous highlighting by resetting the background color
+        row.style.backgroundColor = '';
     });
 
-    // Highlight the row that matches the rank
+    // Find the row with the matching rank and highlight it
     const rowToHighlight = document.querySelector(`#studentTable tbody tr[data-rank="${rank}"]`);
     if (rowToHighlight) {
-        rowToHighlight.classList.add('highlight');
+        rowToHighlight.style.backgroundColor = 'red';
+        rowToHighlight.style.color = 'white'; // Make text color white for better contrast
     }
 }
 
@@ -150,15 +153,9 @@ document.getElementById('shareButton').addEventListener('click', () => {
     console.log(`Share this link: ${rankLink}`);
 });
 
-// Check if the URL contains a rank query parameter
-const urlParams = new URLSearchParams(window.location.search);
-const rankFromUrl = urlParams.get('rank');
-if (rankFromUrl) {
-    highlightRank(rankFromUrl);
-}
-
 // Generate the student table on page load
 generateTable();
+
 </script>
 
 </body>
