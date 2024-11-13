@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="path_to_image.jpg"> <!-- Add your image here for better sharing -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="path_to_image.jpg"> <!-- Add your image here for better sharing -->
     <title>Student Details with Rank Sharing</title>
+
+    <!-- Dynamic Meta Tags for Social Sharing -->
+    <meta property="og:title" content="Student Rank Details">
+    <meta property="og:description" content="Check out the top students of IARCO 2024.">
+    <meta name="twitter:title" content="Student Rank Details">
+    <meta name="twitter:description" content="Check out the top students of IARCO 2024.">
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -106,6 +117,7 @@ function generateTable() {
     const rankFromUrl = urlParams.get('rank');
     if (rankFromUrl) {
         highlightRank(rankFromUrl);
+        updateMetaTags(rankFromUrl);  // Update meta tags when a rank is passed
     }
 }
 
@@ -138,6 +150,26 @@ function copyRankLink(rank) {
     document.body.removeChild(tempInput);
 
     alert(`Rank link copied to clipboard: ${rankLink}`);
+}
+
+// Function to update meta tags dynamically based on rank and student details
+function updateMetaTags(rank) {
+    const student = studentsData.find(s => s.rank === parseInt(rank));
+    if (!student) return;
+
+    const title = `${student.name} is ${student.rank}th to IARCO 2024`;
+    const description = `${student.name} secured rank ${student.rank} with a score of ${student.score} in IARCO 2024.`;
+
+    // Update meta tags dynamically
+    document.title = title;
+
+    // Update Open Graph meta tags
+    document.querySelector('meta[property="og:title"]').setAttribute('content', title);
+    document.querySelector('meta[property="og:description"]').setAttribute('content', description);
+
+    // Update Twitter meta tags
+    document.querySelector('meta[name="twitter:title"]').setAttribute('content', title);
+    document.querySelector('meta[name="twitter:description"]').setAttribute('content', description);
 }
 
 // Event listener for the "Share Rank" button
