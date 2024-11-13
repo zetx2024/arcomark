@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="path_to_placeholder_image.jpg"> <!-- Dynamic image generation can be implemented server-side -->
-    <meta property="og:image" content="path_to_placeholder_image.jpg"> <!-- Same as above -->
+    <meta name="twitter:image" content="path_to_placeholder_image.jpg">
+    <meta property="og:image" content="path_to_placeholder_image.jpg">
     <meta name="twitter:description" content="">
     <meta property="og:description" content="">
     <meta name="twitter:title" content="">
@@ -129,6 +129,21 @@
         .honorable-mention {
             font-style: italic;
         }
+
+        /* View Proposal button style */
+        .view-proposal {
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .view-proposal:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -146,8 +161,8 @@
             <th>Rank</th>
             <th>Name</th>
             <th>Category</th>
-            <th>Roll Number</th>
             <th>Score</th>
+            <th>View Proposal</th>
         </tr>
     </thead>
     <tbody>
@@ -160,17 +175,12 @@
 </div>
 
 <script>
-// Sample JSON data with category and scores (no rank field)
-const studentsData = [
-    { "name": "John Doe", "category": "Senior", "rollNumber": "S101", "scaledFinalScore": 98, "medal": "gold" },
-    { "name": "Jane Smith", "category": "Senior", "rollNumber": "S102", "scaledFinalScore": 96, "medal": "silver" },
-    { "name": "Alice Brown", "category": "Senior", "rollNumber": "S103", "scaledFinalScore": 94, "medal": "bronze" },
-    { "name": "Bob White", "category": "Senior", "rollNumber": "S104", "scaledFinalScore": 92, "medal": "honorable" },
-    { "name": "David Black", "category": "Junior", "rollNumber": "J101", "scaledFinalScore": 89, "medal": "honorable" },
-    { "name": "Emma Blue", "category": "Junior", "rollNumber": "J102", "scaledFinalScore": 87, "medal": "honorable" },
-    { "name": "Grace Green", "category": "Junior", "rollNumber": "J103", "scaledFinalScore": 85, "medal": "honorable" },
-    { "name": "Tom Red", "category": "Junior", "rollNumber": "J104", "scaledFinalScore": 82, "medal": "honorable" }
-];
+// Function to fetch the student data from the external students.json file
+async function fetchStudentData() {
+    const response = await fetch('students.json');
+    const data = await response.json();
+    return data;
+}
 
 // Function to calculate and sort students by their scaledFinalScore to determine rank
 function calculateRanks(students) {
@@ -182,23 +192,24 @@ function calculateRanks(students) {
 }
 
 // Function to generate table rows from sorted and ranked student data
-function generateTable(category) {
+function generateTable(category, studentsData) {
     const tableBody = document.querySelector('#studentTable tbody');
     const filteredStudents = studentsData.filter(student => student.category === category);
     const rankedStudents = calculateRanks(filteredStudents);
 
     tableBody.innerHTML = '';  // Clear previous rows
 
-    rankedStudents.forEach(student => {
+    rankedStudents.forEach((student, index) => {
         const row = document.createElement('tr');
         row.dataset.rank = student.rank;
         row.dataset.category = student.category;
 
         // Apply special styles based on rank or medal
         if (student.rank === 1) row.classList.add('gold');
-        if (student.rank === 2) row.classList.add('silver');
-        if (student.rank === 3) row.classList.add('bronze');
-        if (student.rank >= 4 && student.rank <= 10) row.classList.add('honorable-mention');
+        else if (student.rank === 2) row.classList.add('silver');
+        else if (student.rank === 3) row.classList.add('bronze');
+        else if (student.rank <= 10) row.classList.add('honorable-mention');
+        else row.classList.add('honorable'); // After 10th place, just honorably mention
 
         const medalSVG = getMedalSVG(student.rank);
 
@@ -206,8 +217,8 @@ function generateTable(category) {
             <td>${medalSVG}</td>
             <td>${student.name}</td>
             <td>${student.category}</td>
-            <td>${student.rollNumber}</td>
             <td>${student.scaledFinalScore}</td>
+            <td><a href="${student.viewProposal}" class="view-proposal" target="_blank">View Proposal</a></td>
         `;
 
         // Add event listener for double-clicking any table element to copy rank link
@@ -237,8 +248,6 @@ function getMedalSVG(rank) {
             return '<img class="medal" src="silver_medal.svg" alt="Silver Medal">';
         case 3:
             return '<img class="medal" src="bronze_medal.svg" alt="Bronze Medal">';
-        case 'honorable':
-            return '<span class="honorable-mention">Honorable Mention</span>';
         default:
             return '';  // No medal for other ranks
     }
@@ -288,20 +297,27 @@ function updateMetaTags(category, rank) {
 }
 
 // Toggle button functionality for Junior and Senior categories
-document.getElementById('juniorButton').addEventListener('click', () => {
+document.getElementById('juniorButton').addEventListener('click', async () => {
     document.getElementById('juniorButton').classList.add('active');
     document.getElementById('seniorButton').classList.remove('active');
-    generateTable('Junior');
+    const studentsData = await fetchStudentData();
+    generateTable('Junior', studentsData);
 });
 
-document.getElementById('seniorButton').addEventListener('click', () => {
+document.getElementById('seniorButton').addEventListener('click', async () => {
     document.getElementById('seniorButton').classList.add('active');
     document.getElementById('juniorButton').classList.remove('active');
-    generateTable('Senior');
+    const studentsData = await fetchStudentData();
+    generateTable('Senior', studentsData);
 });
 
 // Initialize the page to show Junior category by default
-generateTable('Junior');
+async function init() {
+    const studentsData = await fetchStudentData();
+    generateTable('Junior', studentsData);
+}
+
+init();
 </script>
 
 </body>
