@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel to JSON Generator</title>
+    <title>Generate Student JSON from Excel</title>
     <link rel="stylesheet" href="gen_mark.css">
 </head>
 <body>
@@ -29,11 +29,14 @@
             <p><strong>Generated Student ID: </strong><span id="student-id">-</span></p>
         </div>
 
-        <h2>Generated JSON</h2>
+        <h2>Generated JSON for All Students</h2>
         <pre id="json-output"></pre>
 
         <!-- Copy to Clipboard Button -->
         <button id="copy-btn">Copy to Clipboard</button>
+        
+        <!-- Download Button for JSON File -->
+        <button id="download-btn">Download JSON File</button>
     </div>
 
     <!-- Include JS Library -->
