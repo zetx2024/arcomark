@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel to JSON Converter</title>
+    <title>Excel to JSON Generator</title>
     <link rel="stylesheet" href="gen_mark.css">
 </head>
 <body>
@@ -11,22 +11,15 @@
         <h1>Generate Student JSON from Excel</h1>
 
         <!-- File Upload for Excel Sheet -->
-        <input type="file" id="excel-file" />
+        <input type="file" id="excel-file" accept=".xlsx, .xls" />
         
-        <!-- Category and Year Selection -->
+        <!-- Category and Year Input Form -->
         <form id="student-form">
             <label for="category">Category:</label>
-            <select id="category" name="category">
-                <option value="Junior">Junior</option>
-                <option value="Senior">Senior</option>
-            </select>
+            <input type="text" id="category" name="category" placeholder="Enter Category (e.g., Junior, Senior)" />
 
             <label for="year">Year:</label>
-            <select id="year" name="year">
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-                <option value="2026">2026</option>
-            </select>
+            <input type="text" id="year" name="year" placeholder="Enter Year (e.g., 2024, 2025)" />
 
             <button type="button" id="generate-btn">Generate JSON</button>
         </form>
@@ -45,7 +38,6 @@
 
     <!-- Include JS Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-    
     <script src="gen_mark.js"></script>
 </body>
 </html>
