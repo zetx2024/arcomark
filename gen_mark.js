@@ -38,43 +38,40 @@ document.getElementById("generate-btn").addEventListener("click", function () {
         return;
     }
 
-    // Use the uploaded data to generate the JSON for a new student
-    const student = studentData[0]; // Taking the first student, you can adjust this if needed
+    const allStudentsJson = [];
 
-    // Generate random Student ID
-    const studentId = generateStudentId();
-
-    // Display the generated Student ID
-    document.getElementById("student-id").textContent = studentId;
-
-    // Prepare the student data for JSON
-    const studentJson = {
-        student_id: studentId,
-        name: student.Name || "Unknown",  // Replace with dynamic data
-        institution: student.Institution || "Unknown",  // Replace with dynamic data
-        category: category,
-        year: year,
-        research_proposal_title: student["Research Proposal Title"] || "Unknown",  // Replace with dynamic data
-        research_paper: {
-            research_problem: student["Research Problem"] || 0,
-            existing_literature: student["Existing Literature"] || 0,
-            research_question: student["Research Question"] || 0,
-            methodology: student["Methodology"] || 0,
-            research_topic: student["Research Topic"] || 0,
-            quality_of_writing: student["Quality of Writing"] || 0,
-            plagiarism_check_percentile: student["Plagiarism Check Percentile"] || 0,
-            presentation: {
-                persuasiveness: student["Persuasiveness"] || 0,
-                video_quality: student["Video Quality"] || 0,
-                research_problem: student["Research Problem (Presentation)"] || 0,
-                research_question: student["Research Question (Presentation)"] || 0,
-                methodology: student["Methodology (Presentation)"] || 0
+    // Loop through all students and generate JSON for each student
+    studentData.forEach(student => {
+        const studentJson = {
+            student_id: generateStudentId(), // Generate random Student ID
+            name: student.Name || "Unknown",
+            institution: student.Institution || "Unknown",
+            category: category,
+            year: year,
+            research_proposal_title: student["Research Proposal Title"] || "Unknown",
+            research_paper: {
+                research_problem: student["Research Problem"] || 0,
+                existing_literature: student["Existing Literature"] || 0,
+                research_question: student["Research Question"] || 0,
+                methodology: student["Methodology"] || 0,
+                research_topic: student["Research Topic"] || 0,
+                quality_of_writing: student["Quality of Writing"] || 0,
+                plagiarism_check_percentile: student["Plagiarism Check Percentile"] || 0,
+                presentation: {
+                    persuasiveness: student["Persuasiveness"] || 0,
+                    video_quality: student["Video Quality"] || 0,
+                    research_problem: student["Research Problem (Presentation)"] || 0,
+                    research_question: student["Research Question (Presentation)"] || 0,
+                    methodology: student["Methodology (Presentation)"] || 0
+                }
             }
-        }
-    };
+        };
 
-    // Display the JSON in the <pre> tag
-    document.getElementById("json-output").textContent = JSON.stringify(studentJson, null, 2);
+        allStudentsJson.push(studentJson);
+    });
+
+    // Display the generated JSON for all students
+    document.getElementById("json-output").textContent = JSON.stringify(allStudentsJson, null, 2);
 });
 
 // Function to generate a random Student ID
@@ -109,4 +106,19 @@ document.getElementById("copy-btn").addEventListener("click", function () {
 
     // Deselect text
     window.getSelection().removeAllRanges();
+});
+
+// Download JSON file functionality
+document.getElementById("download-btn").addEventListener("click", function () {
+    const jsonOutput = document.getElementById("json-output").textContent;
+    if (!jsonOutput) {
+        alert("No JSON data to download.");
+        return;
+    }
+
+    const blob = new Blob([jsonOutput], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = "students_data.json";
+    link.click();
 });
