@@ -195,12 +195,12 @@ function generateTable(category) {
         row.dataset.category = student.category;
 
         // Apply special styles based on rank or medal
-        if (student.medal === "gold") row.classList.add('gold');
-        if (student.medal === "silver") row.classList.add('silver');
-        if (student.medal === "bronze") row.classList.add('bronze');
+        if (student.rank === 1) row.classList.add('gold');
+        if (student.rank === 2) row.classList.add('silver');
+        if (student.rank === 3) row.classList.add('bronze');
         if (student.rank >= 4 && student.rank <= 10) row.classList.add('honorable-mention');
 
-        const medalSVG = getMedalSVG(student.medal);
+        const medalSVG = getMedalSVG(student.rank);
 
         row.innerHTML = `
             <td>${medalSVG}</td>
@@ -228,30 +228,22 @@ function generateTable(category) {
     }
 }
 
-// Function to get Medal SVG based on the student's medal type
-function getMedalSVG(medal) {
-    switch (medal) {
-        case 'gold':
+// Function to get Medal SVG based on rank
+function getMedalSVG(rank) {
+    switch (rank) {
+        case 1:
             return '<img class="medal" src="gold_medal.svg" alt="Gold Medal">';
-        case 'silver':
+        case 2:
             return '<img class="medal" src="silver_medal.svg" alt="Silver Medal">';
-        case 'bronze':
+        case 3:
             return '<img class="medal" src="bronze_medal.svg" alt="Bronze Medal">';
-        case 'honorable':
-            return '<span class="honorable-mention">Honorable Mention</span>';
         default:
-            return '';
+            return '';  // No medal for other ranks
     }
 }
 
 // Function to highlight the rank with a shaking effect
 function highlightRank(rank) {
-    const allRows = document.querySelectorAll('#studentTable tbody tr');
-    allRows.forEach(row => {
-        row.classList.remove('shake');
-        row.classList.remove('zoom');
-    });
-
     const rowToHighlight = document.querySelector(`#studentTable tbody tr[data-rank="${rank}"]`);
     if (rowToHighlight) {
         rowToHighlight.classList.add('shake');
@@ -293,18 +285,6 @@ function updateMetaTags(category, rank) {
     document.querySelector('meta[name="twitter:description"]').setAttribute('content', description);
 }
 
-// Event listener for the "Share Rank" button
-document.getElementById('shareButton').addEventListener('click', () => {
-    const category = document.querySelector('button.active').textContent.toLowerCase();
-    const student = studentsData.find(s => s.category === category);
-    const studentRank = student ? student.rank : 1;
-
-    const rankLink = `${window.location.href.split('?')[0]}?category=${category}&rank=${studentRank}`;
-    alert(`Share this link to share the student's rank: ${rankLink}`);
-    
-    console.log(`Share this link: ${rankLink}`);
-});
-
 // Toggle button functionality for Junior and Senior categories
 document.getElementById('juniorButton').addEventListener('click', () => {
     document.getElementById('juniorButton').classList.add('active');
@@ -318,20 +298,8 @@ document.getElementById('seniorButton').addEventListener('click', () => {
     generateTable('Senior');
 });
 
-// Handle URL query to select category and highlight the rank if provided
-const urlParams = new URLSearchParams(window.location.search);
-const categoryFromUrl = urlParams.get('category');
-const rankFromUrl = urlParams.get('rank');
-
-// Default to Junior category if no category is specified in the URL
-if (categoryFromUrl && (categoryFromUrl === 'junior' || categoryFromUrl === 'senior')) {
-    document.getElementById(`${categoryFromUrl}Button`).classList.add('active');
-    generateTable(categoryFromUrl.charAt(0).toUpperCase() + categoryFromUrl.slice(1));
-} else {
-    // Default to Junior if no category in URL
-    document.getElementById('juniorButton').classList.add('active');
-    generateTable('Junior');
-}
+// Initialize the page to show Junior category by default
+generateTable('Junior');
 </script>
 
 </body>
