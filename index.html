@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 20px;
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -23,6 +23,7 @@
         th, td {
             padding: 10px;
             text-align: center;
+            cursor: pointer;
         }
 
         th {
@@ -96,6 +97,11 @@ function generateTable() {
             <td>${student.score}</td>
         `;
         
+        // Add event listener for double-clicking any table element to copy rank link
+        row.querySelectorAll('td').forEach(cell => {
+            cell.addEventListener('dblclick', () => copyRankLink(student.rank));
+        });
+
         tableBody.appendChild(row);
     });
 }
@@ -113,6 +119,21 @@ function highlightRank(rank) {
     if (rowToHighlight) {
         rowToHighlight.classList.add('highlight');
     }
+}
+
+// Function to copy the rank link to clipboard when a table cell is double-clicked
+function copyRankLink(rank) {
+    const rankLink = `${window.location.href}?rank=${rank}`;
+    
+    // Create a temporary input element to copy the link
+    const tempInput = document.createElement('input');
+    tempInput.value = rankLink;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+
+    alert(`Rank link copied to clipboard: ${rankLink}`);
 }
 
 // Event listener for the "Share Rank" button
