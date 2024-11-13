@@ -121,15 +121,10 @@
             background-color: #f0e68c;
         }
 
-        /* SVG Medals */
-        .medal {
+        .honorable-mention-svg {
             width: 25px;
             height: 25px;
-            vertical-align: middle;
-        }
-
-        .honorable-mention {
-            font-style: italic;
+            fill: #f0e68c;
         }
 
         /* SVG for Honorable Mention */
@@ -285,7 +280,11 @@ function getMedalSVG(rank) {
         case 3:
             return '<img class="medal" src="bronze_medal.svg" alt="Bronze Medal">';
         default:
-            return '';  // No medal for other ranks
+            if (rank <= 10) {
+                // Add the Honorable Mention SVG for ranks 4-10
+                return '<img class="honorable-mention-svg" src="honorable_mention.svg" alt="Honorable Mention">';
+            }
+            return '';  // No medal for other ranks beyond 10
     }
 }
 
