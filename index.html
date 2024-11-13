@@ -34,6 +34,7 @@
             padding: 10px;
             text-align: center;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         th {
@@ -83,19 +84,50 @@
             color: white;
         }
 
-        .gold {
-            background-color: gold;
-            color: black;
+        /* Shake Effect */
+        .shake {
+            animation: shake 0.5s ease-in-out;
         }
 
-        .silver {
-            background-color: silver;
-            color: black;
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
         }
 
-        .bronze {
-            background-color: #cd7f32;
-            color: black;
+        /* Zoom In / Zoom Out Effect */
+        .zoom {
+            animation: zoomInOut 1s ease-in-out;
+        }
+
+        @keyframes zoomInOut {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Medal styles */
+        .gold { background-color: gold; color: black; }
+        .silver { background-color: silver; color: black; }
+        .bronze { background-color: #cd7f32; color: black; }
+
+        .honorable { background-color: #f8f8f8; color: #555; }
+
+        .honorable-mention {
+            background-color: #f0e68c;
+        }
+
+        /* SVG Medals */
+        .medal {
+            width: 25px;
+            height: 25px;
+            vertical-align: middle;
+        }
+
+        .honorable-mention {
+            font-style: italic;
         }
     </style>
 </head>
@@ -130,14 +162,14 @@
 <script>
 // Sample JSON data with category and scores (no rank field)
 const studentsData = [
-    { "name": "John Doe", "category": "Senior", "rollNumber": "S101", "scaledFinalScore": 98 },
-    { "name": "Jane Smith", "category": "Senior", "rollNumber": "S102", "scaledFinalScore": 96 },
-    { "name": "Alice Brown", "category": "Senior", "rollNumber": "S103", "scaledFinalScore": 94 },
-    { "name": "Bob White", "category": "Senior", "rollNumber": "S104", "scaledFinalScore": 92 },
-    { "name": "David Black", "category": "Junior", "rollNumber": "J101", "scaledFinalScore": 89 },
-    { "name": "Emma Blue", "category": "Junior", "rollNumber": "J102", "scaledFinalScore": 87 },
-    { "name": "Grace Green", "category": "Junior", "rollNumber": "J103", "scaledFinalScore": 85 },
-    { "name": "Tom Red", "category": "Junior", "rollNumber": "J104", "scaledFinalScore": 82 }
+    { "name": "John Doe", "category": "Senior", "rollNumber": "S101", "scaledFinalScore": 98, "medal": "gold" },
+    { "name": "Jane Smith", "category": "Senior", "rollNumber": "S102", "scaledFinalScore": 96, "medal": "silver" },
+    { "name": "Alice Brown", "category": "Senior", "rollNumber": "S103", "scaledFinalScore": 94, "medal": "bronze" },
+    { "name": "Bob White", "category": "Senior", "rollNumber": "S104", "scaledFinalScore": 92, "medal": "honorable" },
+    { "name": "David Black", "category": "Junior", "rollNumber": "J101", "scaledFinalScore": 89, "medal": "honorable" },
+    { "name": "Emma Blue", "category": "Junior", "rollNumber": "J102", "scaledFinalScore": 87, "medal": "honorable" },
+    { "name": "Grace Green", "category": "Junior", "rollNumber": "J103", "scaledFinalScore": 85, "medal": "honorable" },
+    { "name": "Tom Red", "category": "Junior", "rollNumber": "J104", "scaledFinalScore": 82, "medal": "honorable" }
 ];
 
 // Function to calculate and sort students by their scaledFinalScore to determine rank
@@ -162,13 +194,16 @@ function generateTable(category) {
         row.dataset.rank = student.rank;
         row.dataset.category = student.category;
 
-        // Apply Gold, Silver, Bronze coloring to the top 3 ranks
-        if (student.rank === 1) row.classList.add('gold');
-        if (student.rank === 2) row.classList.add('silver');
-        if (student.rank === 3) row.classList.add('bronze');
+        // Apply special styles based on rank or medal
+        if (student.medal === "gold") row.classList.add('gold');
+        if (student.medal === "silver") row.classList.add('silver');
+        if (student.medal === "bronze") row.classList.add('bronze');
+        if (student.rank >= 4 && student.rank <= 10) row.classList.add('honorable-mention');
+
+        const medalSVG = getMedalSVG(student.medal);
 
         row.innerHTML = `
-            <td>${student.rank}</td>
+            <td>${medalSVG}</td>
             <td>${student.name}</td>
             <td>${student.category}</td>
             <td>${student.rollNumber}</td>
@@ -193,17 +228,34 @@ function generateTable(category) {
     }
 }
 
-// Function to highlight the rank when a link is clicked
+// Function to get Medal SVG based on the student's medal type
+function getMedalSVG(medal) {
+    switch (medal) {
+        case 'gold':
+            return '<img class="medal" src="gold_medal.svg" alt="Gold Medal">';
+        case 'silver':
+            return '<img class="medal" src="silver_medal.svg" alt="Silver Medal">';
+        case 'bronze':
+            return '<img class="medal" src="bronze_medal.svg" alt="Bronze Medal">';
+        case 'honorable':
+            return '<span class="honorable-mention">Honorable Mention</span>';
+        default:
+            return '';
+    }
+}
+
+// Function to highlight the rank with a shaking effect
 function highlightRank(rank) {
     const allRows = document.querySelectorAll('#studentTable tbody tr');
     allRows.forEach(row => {
-        row.style.backgroundColor = '';  // Remove previous highlighting
+        row.classList.remove('shake');
+        row.classList.remove('zoom');
     });
 
     const rowToHighlight = document.querySelector(`#studentTable tbody tr[data-rank="${rank}"]`);
     if (rowToHighlight) {
-        rowToHighlight.style.backgroundColor = 'red';
-        rowToHighlight.style.color = 'white'; // Text color white for better contrast
+        rowToHighlight.classList.add('shake');
+        rowToHighlight.classList.add('zoom');
     }
 }
 
