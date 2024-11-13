@@ -324,7 +324,7 @@ const categoryFromUrl = urlParams.get('category');
 const rankFromUrl = urlParams.get('rank');
 
 // Default to Junior category if no category is specified in the URL
-if (categoryFromUrl && (categoryFromUrl === 'Junior' || categoryFromUrl === 'Senior')) {
+if (categoryFromUrl && (categoryFromUrl === 'junior' || categoryFromUrl === 'senior')) {
     document.getElementById(`${categoryFromUrl}Button`).classList.add('active');
     generateTable(categoryFromUrl.charAt(0).toUpperCase() + categoryFromUrl.slice(1));
 } else {
