@@ -249,7 +249,7 @@ function generateTable(category, studentsData) {
         else row.classList.add('honorable'); // After 10th place, just honorably mention
 
         const medalSVG = getMedalSVG(student.rank);
-        const honorableSVG = student.rank > 3 && student.rank <= 10 ? `<svg class="honorable-mention-svg" viewBox="0 0 24 24"><path d="M12 2l1.5 4h4.5l-3 2.5 1 4.5-3.5-2.5-3.5 2.5 1-4.5-3-2.5h4.5z"/></svg>` : student.rank;
+        const honorableSVG = student.rank > 3 && student.rank <= 10 ? `<svg class="honorable-mention-svg" viewBox="0 0 24 24"><path d="M12 2l1.5 4h4.5l-3 2.5 1 4.5-3.5-2.5-3.5 2.5 1-4.5-3-2.5h4.5z"/></svg>` : '';
 
         row.innerHTML = `
             <td>${medalSVG}${honorableSVG}</td>
@@ -290,8 +290,8 @@ function getMedalSVG(rank) {
             if (rank <= 10) {
                 // Add the Honorable Mention SVG for ranks 4-10
                 return '<img class="honorable-mention-svg" src="honorable_mention.svg" alt="Honorable Mention">';
-            }
-            return '';  // No medal for other ranks beyond 10
+            } else { return rank;}
+            
     }
 }
 
