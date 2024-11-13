@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel to JSON Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Generate Student JSON from Excel</h1>
+
+        <!-- File Upload for Excel Sheet -->
+        <input type="file" id="excel-file" />
+        
+        <!-- Category and Year Selection -->
+        <form id="student-form">
+            <label for="category">Category:</label>
+            <select id="category" name="category">
+                <option value="Junior">Junior</option>
+                <option value="Senior">Senior</option>
+            </select>
+
+            <label for="year">Year:</label>
+            <select id="year" name="year">
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+            </select>
+
+            <button type="button" id="generate-btn">Generate JSON</button>
+        </form>
+
+        <!-- Display the Generated Student ID -->
+        <div id="student-id-container">
+            <p><strong>Generated Student ID: </strong><span id="student-id">-</span></p>
+        </div>
+
+        <h2>Generated JSON</h2>
+        <pre id="json-output"></pre>
+
+        <!-- Copy to Clipboard Button -->
+        <button id="copy-btn">Copy to Clipboard</button>
+    </div>
+
+    <!-- Include JS Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>
