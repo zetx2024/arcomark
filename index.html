@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="path_to_image.jpg"> <!-- Add your image here for better sharing -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="path_to_image.jpg"> <!-- Add your image here for better sharing -->
-    <title>Student Details with Rank Sharing</title>
-
-    <!-- Dynamic Meta Tags for Social Sharing -->
-    <meta property="og:title" content="Student Rank Details">
+    <meta name="twitter:image" content="path_to_placeholder_image.jpg"> <!-- This will be updated dynamically -->
+    <meta property="og:image" content="path_to_placeholder_image.jpg"> <!-- This will be updated dynamically -->
+    <meta name="twitter:description" content="Check out the top students of IARCO 2024.">
     <meta property="og:description" content="Check out the top students of IARCO 2024.">
     <meta name="twitter:title" content="Student Rank Details">
-    <meta name="twitter:description" content="Check out the top students of IARCO 2024.">
+    <meta property="og:title" content="Student Rank Details">
+    <title>Student Details with Rank Sharing</title>
 
     <style>
         body {
@@ -82,26 +80,41 @@
 </div>
 
 <script>
-// Sample JSON data
+// Sample JSON data with student scores (no rank field)
 const studentsData = [
-    { "rank": 1, "name": "John Doe", "rollNumber": "S101", "score": 98 },
-    { "rank": 2, "name": "Jane Smith", "rollNumber": "S102", "score": 96 },
-    { "rank": 3, "name": "Alice Brown", "rollNumber": "S103", "score": 94 },
-    { "rank": 4, "name": "Bob White", "rollNumber": "S104", "score": 92 }
+    { "name": "John Doe", "rollNumber": "S101", "scaledFinalScore": 98 },
+    { "name": "Jane Smith", "rollNumber": "S102", "scaledFinalScore": 96 },
+    { "name": "Alice Brown", "rollNumber": "S103", "scaledFinalScore": 94 },
+    { "name": "Bob White", "rollNumber": "S104", "scaledFinalScore": 92 }
 ];
 
-// Function to generate table rows from JSON data
+// Function to calculate and sort students by their scaledFinalScore to determine rank
+function calculateRanks(students) {
+    // Sort students by scaledFinalScore in descending order
+    students.sort((a, b) => b.scaledFinalScore - a.scaledFinalScore);
+
+    // Assign ranks based on sorted order
+    students.forEach((student, index) => {
+        student.rank = index + 1;  // Ranks start from 1
+    });
+
+    return students;
+}
+
+// Function to generate table rows from sorted and ranked student data
 function generateTable() {
     const tableBody = document.querySelector('#studentTable tbody');
-    studentsData.forEach(student => {
+    const rankedStudents = calculateRanks(studentsData);
+
+    rankedStudents.forEach(student => {
         const row = document.createElement('tr');
         row.dataset.rank = student.rank;
-        
+
         row.innerHTML = `
             <td>${student.rank}</td>
             <td>${student.name}</td>
             <td>${student.rollNumber}</td>
-            <td>${student.score}</td>
+            <td>${student.scaledFinalScore}</td>
         `;
         
         // Add event listener for double-clicking any table element to copy rank link
@@ -125,15 +138,13 @@ function generateTable() {
 function highlightRank(rank) {
     const allRows = document.querySelectorAll('#studentTable tbody tr');
     allRows.forEach(row => {
-        // Remove any previous highlighting by resetting the background color
-        row.style.backgroundColor = '';
+        row.style.backgroundColor = '';  // Remove previous highlighting
     });
 
-    // Find the row with the matching rank and highlight it
     const rowToHighlight = document.querySelector(`#studentTable tbody tr[data-rank="${rank}"]`);
     if (rowToHighlight) {
         rowToHighlight.style.backgroundColor = 'red';
-        rowToHighlight.style.color = 'white'; // Make text color white for better contrast
+        rowToHighlight.style.color = 'white'; // Text color white for better contrast
     }
 }
 
@@ -141,7 +152,6 @@ function highlightRank(rank) {
 function copyRankLink(rank) {
     const rankLink = `${window.location.href}?rank=${rank}`;
     
-    // Create a temporary input element to copy the link
     const tempInput = document.createElement('input');
     tempInput.value = rankLink;
     document.body.appendChild(tempInput);
@@ -158,7 +168,7 @@ function updateMetaTags(rank) {
     if (!student) return;
 
     const title = `${student.name} is ${student.rank}th to IARCO 2024`;
-    const description = `${student.name} secured rank ${student.rank} with a score of ${student.score} in IARCO 2024.`;
+    const description = `${student.name} secured rank ${student.rank} with a score of ${student.scaledFinalScore} in IARCO 2024.`;
 
     // Update meta tags dynamically
     document.title = title;
@@ -166,15 +176,24 @@ function updateMetaTags(rank) {
     // Update Open Graph meta tags
     document.querySelector('meta[property="og:title"]').setAttribute('content', title);
     document.querySelector('meta[property="og:description"]').setAttribute('content', description);
+    document.querySelector('meta[property="og:image"]').setAttribute('content', generatePlaceholderImage(student));
 
     // Update Twitter meta tags
     document.querySelector('meta[name="twitter:title"]').setAttribute('content', title);
     document.querySelector('meta[name="twitter:description"]').setAttribute('content', description);
+    document.querySelector('meta[name="twitter:image"]').setAttribute('content', generatePlaceholderImage(student));
+}
+
+// Function to simulate the generation of a placeholder image based on student details
+function generatePlaceholderImage(student) {
+    // Simulate a dynamic image URL that incorporates the student's name and rank.
+    // In a real-world scenario, this image URL would be generated by a server-side image generation service.
+    const imageUrl = `https://dummyimage.com/600x400/000/fff&text=${encodeURIComponent(student.name)}+Rank+${student.rank}`;
+    return imageUrl;
 }
 
 // Event listener for the "Share Rank" button
 document.getElementById('shareButton').addEventListener('click', () => {
-    // Randomly select a student to share
     const student = studentsData[Math.floor(Math.random() * studentsData.length)];
     const studentRank = student.rank;
 
