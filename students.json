@@ -152,5 +152,41 @@
         "category": "Junior",
         "scaledFinalScore": 35,
         "viewProposal": "https://example.com/proposal5"
+    },
+    {
+        "name": "David Black",
+        "category": "Junior",
+        "scaledFinalScore": 38,
+        "viewProposal": "https://example.com/proposal4"
+    },
+    {
+        "name": "David Black",
+        "category": "Junior",
+        "scaledFinalScore": 29,
+        "viewProposal": "https://example.com/proposal4"
+    },
+    {
+        "name": "David Black",
+        "category": "Junior",
+        "scaledFinalScore": 19,
+        "viewProposal": "https://example.com/proposal4"
+    },
+    {
+        "name": "David Black",
+        "category": "Junior",
+        "scaledFinalScore": 09,
+        "viewProposal": "https://example.com/proposal4"
+    },
+    {
+        "name": "David Black",
+        "category": "Junior",
+        "scaledFinalScore": 39,
+        "viewProposal": "https://example.com/proposal4"
+    },
+    {
+        "name": "David Black",
+        "category": "Junior",
+        "scaledFinalScore": 39,
+        "viewProposal": "https://example.com/proposal4"
     }
 ]
