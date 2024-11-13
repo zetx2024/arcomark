@@ -55,17 +55,42 @@
         .share-container {
             margin-top: 20px;
         }
+
+        .toggle-buttons {
+            margin-bottom: 20px;
+        }
+
+        .gold {
+            background-color: gold;
+            color: black;
+        }
+
+        .silver {
+            background-color: silver;
+            color: black;
+        }
+
+        .bronze {
+            background-color: #cd7f32;
+            color: black;
+        }
     </style>
 </head>
 <body>
 
 <h2>Student Details Table</h2>
 
+<div class="toggle-buttons">
+    <button id="juniorButton">Junior</button>
+    <button id="seniorButton">Senior</button>
+</div>
+
 <table id="studentTable">
     <thead>
         <tr>
             <th>Rank</th>
             <th>Name</th>
+            <th>Category</th>
             <th>Roll Number</th>
             <th>Score</th>
         </tr>
@@ -80,12 +105,16 @@
 </div>
 
 <script>
-// Sample JSON data with student scores (no rank field)
+// Sample JSON data with category and scores (no rank field)
 const studentsData = [
-    { "name": "John Doe", "rollNumber": "S101", "scaledFinalScore": 98 },
-    { "name": "Jane Smith", "rollNumber": "S102", "scaledFinalScore": 96 },
-    { "name": "Alice Brown", "rollNumber": "S103", "scaledFinalScore": 94 },
-    { "name": "Bob White", "rollNumber": "S104", "scaledFinalScore": 92 }
+    { "name": "John Doe", "category": "Senior", "rollNumber": "S101", "scaledFinalScore": 98 },
+    { "name": "Jane Smith", "category": "Senior", "rollNumber": "S102", "scaledFinalScore": 96 },
+    { "name": "Alice Brown", "category": "Senior", "rollNumber": "S103", "scaledFinalScore": 94 },
+    { "name": "Bob White", "category": "Senior", "rollNumber": "S104", "scaledFinalScore": 92 },
+    { "name": "David Black", "category": "Junior", "rollNumber": "J101", "scaledFinalScore": 89 },
+    { "name": "Emma Blue", "category": "Junior", "rollNumber": "J102", "scaledFinalScore": 87 },
+    { "name": "Grace Green", "category": "Junior", "rollNumber": "J103", "scaledFinalScore": 85 },
+    { "name": "Tom Red", "category": "Junior", "rollNumber": "J104", "scaledFinalScore": 82 }
 ];
 
 // Function to calculate and sort students by their scaledFinalScore to determine rank
@@ -102,24 +131,34 @@ function calculateRanks(students) {
 }
 
 // Function to generate table rows from sorted and ranked student data
-function generateTable() {
+function generateTable(category) {
     const tableBody = document.querySelector('#studentTable tbody');
-    const rankedStudents = calculateRanks(studentsData);
+    const filteredStudents = studentsData.filter(student => student.category === category);
+    const rankedStudents = calculateRanks(filteredStudents);
+
+    tableBody.innerHTML = '';  // Clear previous rows
 
     rankedStudents.forEach(student => {
         const row = document.createElement('tr');
         row.dataset.rank = student.rank;
+        row.dataset.category = student.category;
+
+        // Apply Gold, Silver, Bronze coloring to the top 3 ranks
+        if (student.rank === 1) row.classList.add('gold');
+        if (student.rank === 2) row.classList.add('silver');
+        if (student.rank === 3) row.classList.add('bronze');
 
         row.innerHTML = `
             <td>${student.rank}</td>
             <td>${student.name}</td>
+            <td>${student.category}</td>
             <td>${student.rollNumber}</td>
             <td>${student.scaledFinalScore}</td>
         `;
-        
+
         // Add event listener for double-clicking any table element to copy rank link
         row.querySelectorAll('td').forEach(cell => {
-            cell.addEventListener('dblclick', () => copyRankLink(student.rank));
+            cell.addEventListener('dblclick', () => copyRankLink(student.category, student.rank));
         });
 
         tableBody.appendChild(row);
@@ -128,9 +167,10 @@ function generateTable() {
     // Check if the URL contains a rank query parameter after the table is generated
     const urlParams = new URLSearchParams(window.location.search);
     const rankFromUrl = urlParams.get('rank');
-    if (rankFromUrl) {
+    const categoryFromUrl = urlParams.get('category');
+    if (rankFromUrl && categoryFromUrl === category) {
         highlightRank(rankFromUrl);
-        updateMetaTags(rankFromUrl);  // Update meta tags when a rank is passed
+        updateMetaTags(categoryFromUrl, rankFromUrl);  // Update meta tags when a rank is passed
     }
 }
 
@@ -149,8 +189,8 @@ function highlightRank(rank) {
 }
 
 // Function to copy the rank link to clipboard when a table cell is double-clicked
-function copyRankLink(rank) {
-    const rankLink = `${window.location.href}?rank=${rank}`;
+function copyRankLink(category, rank) {
+    const rankLink = `${window.location.href.split('?')[0]}?category=${category}&rank=${rank}`;
     
     const tempInput = document.createElement('input');
     tempInput.value = rankLink;
@@ -163,12 +203,12 @@ function copyRankLink(rank) {
 }
 
 // Function to update meta tags dynamically based on rank and student details
-function updateMetaTags(rank) {
-    const student = studentsData.find(s => s.rank === parseInt(rank));
+function updateMetaTags(category, rank) {
+    const student = studentsData.find(s => s.category === category && s.rank === parseInt(rank));
     if (!student) return;
 
-    const title = `${student.name} is ${student.rank}th to IARCO 2024`;
-    const description = `${student.name} secured rank ${student.rank} with a score of ${student.scaledFinalScore} in IARCO 2024.`;
+    const title = `${student.name} is ${student.rank}th in ${category} to IARCO 2024`;
+    const description = `${student.name} secured rank ${student.rank} with a score of ${student.scaledFinalScore} in IARCO 2024 (Category: ${category}).`;
 
     // Update meta tags dynamically
     document.title = title;
@@ -176,36 +216,40 @@ function updateMetaTags(rank) {
     // Update Open Graph meta tags
     document.querySelector('meta[property="og:title"]').setAttribute('content', title);
     document.querySelector('meta[property="og:description"]').setAttribute('content', description);
-    document.querySelector('meta[property="og:image"]').setAttribute('content', generatePlaceholderImage(student));
 
     // Update Twitter meta tags
     document.querySelector('meta[name="twitter:title"]').setAttribute('content', title);
     document.querySelector('meta[name="twitter:description"]').setAttribute('content', description);
-    document.querySelector('meta[name="twitter:image"]').setAttribute('content', generatePlaceholderImage(student));
-}
-
-// Function to simulate the generation of a placeholder image based on student details
-function generatePlaceholderImage(student) {
-    // Simulate a dynamic image URL that incorporates the student's name and rank.
-    // In a real-world scenario, this image URL would be generated by a server-side image generation service.
-    const imageUrl = `https://dummyimage.com/600x400/000/fff&text=${encodeURIComponent(student.name)}+Rank+${student.rank}`;
-    return imageUrl;
 }
 
 // Event listener for the "Share Rank" button
 document.getElementById('shareButton').addEventListener('click', () => {
-    const student = studentsData[Math.floor(Math.random() * studentsData.length)];
-    const studentRank = student.rank;
+    const category = document.querySelector('button.active').textContent.toLowerCase();
+    const student = studentsData.find(s => s.category === category);
+    const studentRank = student ? student.rank : 1;
 
-    const rankLink = `${window.location.href}?rank=${studentRank}`;
+    const rankLink = `${window.location.href.split('?')[0]}?category=${category}&rank=${studentRank}`;
     alert(`Share this link to share the student's rank: ${rankLink}`);
     
-    // Optionally, you can integrate social media APIs here to share on Facebook, Twitter, etc.
     console.log(`Share this link: ${rankLink}`);
 });
 
-// Generate the student table on page load
-generateTable();
+// Toggle button functionality for Junior and Senior categories
+document.getElementById('juniorButton').addEventListener('click', () => {
+    document.getElementById('juniorButton').classList.add('active');
+    document.getElementById('seniorButton').classList.remove('active');
+    generateTable('Junior');
+});
+
+document.getElementById('seniorButton').addEventListener('click', () => {
+    document.getElementById('seniorButton').classList.add('active');
+    document.getElementById('juniorButton').classList.remove('active');
+    generateTable('Senior');
+});
+
+// Set default to Junior category
+document.getElementById('juniorButton').classList.add('active');
+generateTable('Junior');
 
 </script>
 
