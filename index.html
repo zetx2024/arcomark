@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details with Rank Sharing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .highlight {
+            background-color: yellow;
+        }
+
+        .share-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .share-button:hover {
+            background-color: #45a049;
+        }
+
+        .share-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Student Details Table</h2>
+
+<table id="studentTable">
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Roll Number</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Rows will be populated via JavaScript -->
+    </tbody>
+</table>
+
+<div class="share-container">
+    <button class="share-button" id="shareButton">Share Rank</button>
+</div>
+
+<script>
+// Sample JSON data
+const studentsData = [
+    { "rank": 1, "name": "John Doe", "rollNumber": "S101", "score": 98 },
+    { "rank": 2, "name": "Jane Smith", "rollNumber": "S102", "score": 96 },
+    { "rank": 3, "name": "Alice Brown", "rollNumber": "S103", "score": 94 },
+    { "rank": 4, "name": "Bob White", "rollNumber": "S104", "score": 92 }
+];
+
+// Function to generate table rows from JSON data
+function generateTable() {
+    const tableBody = document.querySelector('#studentTable tbody');
+    studentsData.forEach(student => {
+        const row = document.createElement('tr');
+        row.dataset.rank = student.rank;
+        
+        row.innerHTML = `
+            <td>${student.rank}</td>
+            <td>${student.name}</td>
+            <td>${student.rollNumber}</td>
+            <td>${student.score}</td>
+        `;
+        
+        tableBody.appendChild(row);
+    });
+}
+
+// Function to highlight the rank when a link is clicked
+function highlightRank(rank) {
+    // Remove highlight from any previously highlighted row
+    const allRows = document.querySelectorAll('#studentTable tbody tr');
+    allRows.forEach(row => {
+        row.classList.remove('highlight');
+    });
+
+    // Highlight the row that matches the rank
+    const rowToHighlight = document.querySelector(`#studentTable tbody tr[data-rank="${rank}"]`);
+    if (rowToHighlight) {
+        rowToHighlight.classList.add('highlight');
+    }
+}
+
+// Event listener for the "Share Rank" button
+document.getElementById('shareButton').addEventListener('click', () => {
+    // Randomly select a student to share
+    const student = studentsData[Math.floor(Math.random() * studentsData.length)];
+    const studentRank = student.rank;
+
+    const rankLink = `${window.location.href}?rank=${studentRank}`;
+    alert(`Share this link to share the student's rank: ${rankLink}`);
+    
+    // Optionally, you can integrate social media APIs here to share on Facebook, Twitter, etc.
+    console.log(`Share this link: ${rankLink}`);
+});
+
+// Check if the URL contains a rank query parameter
+const urlParams = new URLSearchParams(window.location.search);
+const rankFromUrl = urlParams.get('rank');
+if (rankFromUrl) {
+    highlightRank(rankFromUrl);
+}
+
+// Generate the student table on page load
+generateTable();
+</script>
+
+</body>
+</html>
