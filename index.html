@@ -237,6 +237,8 @@ function getMedalSVG(rank) {
             return '<img class="medal" src="silver_medal.svg" alt="Silver Medal">';
         case 3:
             return '<img class="medal" src="bronze_medal.svg" alt="Bronze Medal">';
+        case 'honorable':
+            return '<span class="honorable-mention">Honorable Mention</span>';
         default:
             return '';  // No medal for other ranks
     }
