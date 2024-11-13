@@ -25,24 +25,21 @@ document.getElementById("excel-file").addEventListener("change", function (event
 
 // Generate JSON when button is clicked
 document.getElementById("generate-btn").addEventListener("click", function () {
-    const category = document.getElementById("category").value;
-    const year = document.getElementById("year").value;
+    const category = document.getElementById("category").value.trim();
+    const year = document.getElementById("year").value.trim();
+
+    if (!category || !year) {
+        alert("Please enter both Category and Year.");
+        return;
+    }
 
     if (!studentData.length) {
         alert("Please upload an Excel file first.");
         return;
     }
 
-    // Filter the student data by category and year
-    const filteredData = studentData.filter(student => student.Category === category && student.Year === year);
-
-    if (filteredData.length === 0) {
-        alert("No data found for the selected Category and Year.");
-        return;
-    }
-
-    // Select the first student (you could modify this to handle multiple students)
-    const student = filteredData[0];
+    // Use the uploaded data to generate the JSON for a new student
+    const student = studentData[0]; // Taking the first student, you can adjust this if needed
 
     // Generate random Student ID
     const studentId = generateStudentId();
@@ -53,25 +50,25 @@ document.getElementById("generate-btn").addEventListener("click", function () {
     // Prepare the student data for JSON
     const studentJson = {
         student_id: studentId,
-        name: student.Name,
-        institution: student.Institution,
-        category: student.Category,
-        year: student.Year,
-        research_proposal_title: student["Research Proposal Title"],
+        name: student.Name || "Unknown",  // Replace with dynamic data
+        institution: student.Institution || "Unknown",  // Replace with dynamic data
+        category: category,
+        year: year,
+        research_proposal_title: student["Research Proposal Title"] || "Unknown",  // Replace with dynamic data
         research_paper: {
-            research_problem: student["Research Problem"],
-            existing_literature: student["Existing Literature"],
-            research_question: student["Research Question"],
-            methodology: student["Methodology"],
-            research_topic: student["Research Topic"],
-            quality_of_writing: student["Quality of Writing"],
-            plagiarism_check_percentile: student["Plagiarism Check Percentile"],
+            research_problem: student["Research Problem"] || 0,
+            existing_literature: student["Existing Literature"] || 0,
+            research_question: student["Research Question"] || 0,
+            methodology: student["Methodology"] || 0,
+            research_topic: student["Research Topic"] || 0,
+            quality_of_writing: student["Quality of Writing"] || 0,
+            plagiarism_check_percentile: student["Plagiarism Check Percentile"] || 0,
             presentation: {
-                persuasiveness: student["Persuasiveness"],
-                video_quality: student["Video Quality"],
-                research_problem: student["Research Problem (Presentation)"],
-                research_question: student["Research Question (Presentation)"],
-                methodology: student["Methodology (Presentation)"]
+                persuasiveness: student["Persuasiveness"] || 0,
+                video_quality: student["Video Quality"] || 0,
+                research_problem: student["Research Problem (Presentation)"] || 0,
+                research_question: student["Research Question (Presentation)"] || 0,
+                methodology: student["Methodology (Presentation)"] || 0
             }
         }
     };
