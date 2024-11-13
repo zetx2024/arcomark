@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="path_to_placeholder_image.jpg"> <!-- This will be updated dynamically -->
-    <meta property="og:image" content="path_to_placeholder_image.jpg"> <!-- This will be updated dynamically -->
-    <meta name="twitter:description" content="Check out the top students of IARCO 2024.">
-    <meta property="og:description" content="Check out the top students of IARCO 2024.">
-    <meta name="twitter:title" content="Student Rank Details">
-    <meta property="og:title" content="Student Rank Details">
+    <meta name="twitter:image" content="path_to_placeholder_image.jpg"> <!-- Dynamic image generation can be implemented server-side -->
+    <meta property="og:image" content="path_to_placeholder_image.jpg"> <!-- Same as above -->
+    <meta name="twitter:description" content="">
+    <meta property="og:description" content="">
+    <meta name="twitter:title" content="">
+    <meta property="og:title" content="">
     <title>Student Details with Rank Sharing</title>
 
     <style>
@@ -142,14 +142,10 @@ const studentsData = [
 
 // Function to calculate and sort students by their scaledFinalScore to determine rank
 function calculateRanks(students) {
-    // Sort students by scaledFinalScore in descending order
     students.sort((a, b) => b.scaledFinalScore - a.scaledFinalScore);
-
-    // Assign ranks based on sorted order
     students.forEach((student, index) => {
         student.rank = index + 1;  // Ranks start from 1
     });
-
     return students;
 }
 
