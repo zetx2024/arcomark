@@ -433,7 +433,13 @@ document.getElementById('seniorButton').addEventListener('click', async () => {
 // Initialize the page to show Junior category by default
 async function init() {
     const studentsData = await fetchStudentData();
-    generateTable('Junior', studentsData);
+
+    // Check if there is a 'category' query parameter in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category') || 'Junior';  // Default to 'Junior' if no category is specified
+
+    // Generate the table for the selected category
+    generateTable(category, studentsData);
 }
 
 init();
