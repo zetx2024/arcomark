@@ -335,6 +335,17 @@ async function generateTable(category, studentsData) {
     });
 }
 
+
+        // Check if the URL contains a rank query parameter after the table is generated
+    const urlParams = new URLSearchParams(window.location.search);
+    const rankFromUrl = urlParams.get('rank');
+    const categoryFromUrl = urlParams.get('category');
+    if (rankFromUrl && categoryFromUrl === category) {
+        highlightRank(rankFromUrl);
+        updateMetaTags(categoryFromUrl, rankFromUrl);  // Update meta tags when a rank is passed
+    }
+}
+    
 // Function to get Medal SVG based on rank
 function getMedalSVG(rank) {
     switch (rank) {
@@ -373,7 +384,27 @@ function copyRankLink(category, rank) {
 
     alert(`Rank link copied to clipboard: ${rankLink}`);
 }
+// Function to update meta tags dynamically based on rank and student details
+function updateMetaTags(category, rank) {
+    const student = studentsData.find(s => s.category === category && s.rank === parseInt(rank));
+    if (!student) return;
 
+    const title = `${student.name} is ${student.rank}th in ${category} to IARCO 2024`;
+    const description = `${student.name} secured rank ${student.rank} with a score of ${student.scaledFinalScore} in IARCO 2024 (Category: ${category}).`;
+
+    // Update meta tags dynamically
+    document.title = title;
+
+    // Update Open Graph meta tags
+    document.querySelector('meta[property="og:title"]').setAttribute('content', title);
+    document.querySelector('meta[property="og:description"]').setAttribute('content', description);
+
+    // Update Twitter meta tags
+    document.querySelector('meta[name="twitter:title"]').setAttribute('content', title);
+    document.querySelector('meta[name="twitter:description"]').setAttribute('content', description);
+}
+
+    
 // Toggle button functionality for Junior and Senior categories
 document.getElementById('juniorButton').addEventListener('click', async () => {
     document.getElementById('juniorButton').classList.add('active');
