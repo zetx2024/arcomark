@@ -18,6 +18,18 @@
       width: 20px;  /* Set desired width */
       height: 20px; /* Set desired height */
     }
+         /* Style for student name and school */
+        .student-name {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .school-name {
+            font-size: 0.7em;
+            color: #777;
+        }
+
+        
        body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -315,7 +327,8 @@ async function generateTable(category, studentsData) {
 
         row.innerHTML = `
             <td>${getMedalSVG(student.rank)}</td>
-            <td>${student.name}</td>
+            <td><div class="student-name">${student.name}</div>
+                <div class="school-name">${student.school}</div></td>
             <td><span class="country-flag">${flagSVG}</span></td>
             <td>${student.scaledFinalScore}</td>
             <td><a href="${student.viewProposal}" target="_blank">
