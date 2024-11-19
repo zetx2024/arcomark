@@ -106,29 +106,29 @@
                 border-radius: 5px;
             }
 
-       /* Shake Effect */
-        .shake {
-            animation: shake 10s ease-in-out; /* Adjusted to 10s */
-        }
-        
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
-        }
-        
-        /* Zoom In / Zoom Out Effect */
-        .zoom {
-            animation: zoomInOut 10s ease-in-out; /* Adjusted to 10s */
-        }
-        
-        @keyframes zoomInOut {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
+      /* Shake Effect */
+.shake {
+    animation: shake 3s ease-in-out infinite; /* Added 'infinite' to make it loop */
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* Zoom In / Zoom Out Effect */
+.zoom {
+    animation: zoomInOut 3s ease-in-out infinite; /* Added 'infinite' to make it loop */
+}
+
+@keyframes zoomInOut {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
         /* Medal styles */
         .gold { background-color: gold; color: black; }
         .silver { background-color: silver; color: black; }
