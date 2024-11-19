@@ -431,10 +431,47 @@ document.getElementById('seniorButton').addEventListener('click', async () => {
 });
 
 // Initialize the page to show Junior category by default
+// Initialize the page based on the URL query parameter for category
 async function init() {
     const studentsData = await fetchStudentData();
-    generateTable('Junior', studentsData);
+
+    // Check if there is a 'category' query parameter in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category') || 'Junior';  // Default to 'Junior' if no category is specified
+
+    // Set the active class on the appropriate toggle button
+    if (category === 'Senior') {
+        document.getElementById('seniorButton').classList.add('active');
+        document.getElementById('juniorButton').classList.remove('active');
+    } else {
+        document.getElementById('juniorButton').classList.add('active');
+        document.getElementById('seniorButton').classList.remove('active');
+    }
+
+    // Generate the table for the selected category
+    generateTable(category, studentsData);
 }
+
+// Toggle button functionality for Junior and Senior categories
+document.getElementById('juniorButton').addEventListener('click', async () => {
+    document.getElementById('juniorButton').classList.add('active');
+    document.getElementById('seniorButton').classList.remove('active');
+    const studentsData = await fetchStudentData();
+    generateTable('Junior', studentsData);
+
+    // Update URL to reflect the selected category
+    history.pushState(null, '', '?category=Junior');
+});
+
+document.getElementById('seniorButton').addEventListener('click', async () => {
+    document.getElementById('seniorButton').classList.add('active');
+    document.getElementById('juniorButton').classList.remove('active');
+    const studentsData = await fetchStudentData();
+    generateTable('Senior', studentsData);
+
+    // Update URL to reflect the selected category
+    history.pushState(null, '', '?category=Senior');
+});
 
 init();
 </script>
