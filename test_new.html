@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="path_to_placeholder_image.jpg">
+    <meta property="og:image" content="path_to_placeholder_image.jpg">
+    <meta name="twitter:description" content="">
+    <meta property="og:description" content="">
+    <meta name="twitter:title" content="">
+    <meta property="og:title" content="">
+    <title>Student Details with Rank Sharing</title>
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        /* Medal styles */
+        .gold { background-color: gold; color: black; }
+        .silver { background-color: silver; color: black; }
+        .bronze { background-color: #cd7f32; color: black; }
+
+        .honorable { background-color: #f8f8f8; color: #555; }
+
+        /* View Proposal button style */
+        .view-proposal {
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .video-pitch-btn {
+            background-color: #ff6600;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .view-proposal:disabled, .video-pitch-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Sticky Rank */
+        td.rank {
+            position: sticky;
+            left: 0;
+            background-color: #fff;
+            z-index: 10;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .view-proposal, .video-pitch-btn {
+                padding: 4px 8px;
+                font-size: 12px;
+            }
+
+            .toggle-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .toggle-buttons button {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+
+            .medal, .honorable-mention-svg, .iconify--twemoji {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .view-proposal, .video-pitch-btn {
+                padding: 4px 8px;
+                font-size: 10px;
+            }
+
+            .medal, .honorable-mention-svg, .country-flag, .iconify--twemoji {
+                width: 18px;
+                height: 18px;
+            }
+
+            th, td {
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h2>Student Details Table</h2>
+
+<div class="toggle-buttons">
+    <button id="juniorButton" class="active">Junior</button>
+    <button id="seniorButton">Senior</button>
+</div>
+
+<table id="studentTable">
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Score</th>
+            <th>View Proposal</th>
+            <th>Video Pitch</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Rows will be populated via JavaScript -->
+    </tbody>
+</table>
+
+<div class="share-container">
+    <button class="share-button" id="shareButton">Share Rank</button>
+</div>
+
+<script>
+// Function to fetch the student data and country flags
+async function fetchStudentData() {
+    const response = await fetch('students.json');
+    const data = await response.json();
+    return data;
+}
+
+// Fetch country flag SVG data
+async function fetchCountryFlags() {
+    const response = await fetch('flags.json');
+    const data = await response.json();
+    return data;
+}
+
+// Function to get the SVG flag for a given country
+function getCountryFlag(country, flags) {
+    const flag = flags.find(f => f.country.toLowerCase() === country.toLowerCase());
+    return flag ? flag.svg : '';  // Return empty string if flag is not found
+}
+
+// Function to calculate and sort students by their scaledFinalScore to determine rank
+function calculateRanks(students) {
+    students.sort((a, b) => b.scaledFinalScore - a.scaledFinalScore);
+    students.forEach((student, index) => {
+        student.rank = index + 1;  // Ranks start from 1
+    });
+    return students;
+}
+
+// Function to generate table rows from sorted and ranked student data
+async function generateTable(category, studentsData) {
+    const flags = await fetchCountryFlags();
+    const tableBody = document.querySelector('#studentTable tbody');
+    const filteredStudents = studentsData.filter(student => student.category === category);
+    const rankedStudents = calculateRanks(filteredStudents);
+
+    tableBody.innerHTML = '';  // Clear previous rows
+
+    rankedStudents.forEach((student) => {
+        const row = document.createElement('tr');
+        row.dataset.rank = student.rank;
+        row.dataset.category = student.category;
+
+        // Apply special styles based on rank or medal
+        if (student.rank === 1) row.classList.add('gold');
+        else if (student.rank === 2) row.classList.add('silver');
+        else if (student.rank === 3) row.classList.add('bronze');
+        else if (student.rank <= 10) row.classList.add('honorable-mention');
+        else row.classList.add('honorable'); // After 10th place, just honorably mention
+
+        const flagSVG = getCountryFlag(student.country, flags);  // Get the country flag
+
+        // Disable the View Proposal and Video Pitch buttons for students with rank > 10
+        const isEnabled = student.rank <= 10;
+
+        row.innerHTML = `
+            <td class="rank">${student.rank}</td>
+            <td>${student.name}</td>
+            <td><span class="country-flag">${flagSVG}</span></td>
+            <td>${student.scaledFinalScore}</td>
+            <td><button class="view-proposal" ${isEnabled ? '' : 'disabled'}><a href="${student.viewProposal}" target="_blank">View Proposal</a></button></td>
+            <td><button class="video-pitch-btn" ${isEnabled ? '' : 'disabled'}>Video Pitch</button></td>
+        `;
+
+        // Add event listener for double-clicking any table element to copy rank link
+        row.querySelectorAll('td').forEach(cell => {
+            cell.addEventListener('dblclick', () => copyRankLink(student.category, student.rank));
+        });
+
+        tableBody.appendChild(row);
+    });
+}
+
+// Function to highlight the rank with a shaking effect
+function highlightRank(rank) {
+    const rowToHighlight = document.querySelector(`#studentTable tbody tr[data-rank="${rank}"]`);
+    if (rowToHighlight) {
+        rowToHighlight.classList.add('shake');
+    }
+}
+
+// Function to copy the rank link to clipboard when a table cell is double-clicked
+function copyRankLink(category, rank) {
+    const rankLink = `${window.location.href.split('?')[0]}?category=${category}&rank=${rank}`;
+    
+    const tempInput = document.createElement('input');
+    tempInput.value = rankLink;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+
+    alert(`Rank link copied to clipboard: ${rankLink}`);
+}
+
+// Toggle button functionality for Junior and Senior categories
+document.getElementById('juniorButton').addEventListener('click', async () => {
+    document.getElementById('juniorButton').classList.add('active');
+    document.getElementById('seniorButton').classList.remove('active');
+    const studentsData = await fetchStudentData();
+    generateTable('Junior', studentsData);
+});
+
+document.getElementById('seniorButton').addEventListener('click', async () => {
+    document.getElementById('seniorButton').classList.add('active');
+    document.getElementById('juniorButton').classList.remove('active');
+    const studentsData = await fetchStudentData();
+    generateTable('Senior', studentsData);
+});
+
+// Initialize the page to show Junior category by default
+async function init() {
+    const studentsData = await fetchStudentData();
+    generateTable('Junior', studentsData);
+}
+
+init();
+</script>
+
+</body>
+</html>
