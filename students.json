@@ -1,6 +1,7 @@
 [
     {
         "name": "John Doe",
+        "school": "xyz School",
         "category": "Senior",
         "country": "Indonesia",
         "scaledFinalScore": 98,
@@ -9,6 +10,7 @@
     },
     {
         "name": "Jane Smith",
+        "school": "xyz School",
         "category": "Senior",
         "country": "Bangladesh",
         "scaledFinalScore": 96,
@@ -17,6 +19,7 @@
     },
     {
         "name": "Alice Brown",
+        "school": "xyz School",
         "category": "Senior",
         "country": "Bangladesh",
         "scaledFinalScore": 94,
@@ -25,6 +28,7 @@
     },
     {
         "name": "David Black",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 89,
@@ -33,6 +37,7 @@
     },
     {
         "name": "Grace Green",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 85,
@@ -42,6 +47,7 @@
 
   {
         "name": "John Doe",
+      "school": "xyz School university and college",
         "category": "Senior",
       "country": "Bangladesh",
         "scaledFinalScore": 58,
@@ -50,6 +56,7 @@
     },
     {
         "name": "Jane Smith",
+        "school": "xyz School university and college",
         "category": "Senior",
         "country": "Bangladesh",
         "scaledFinalScore": 56,
@@ -58,6 +65,7 @@
     },
     {
         "name": "Alice Brown",
+        "school": "xyz School university and college",
         "category": "Senior",
         "country": "Bangladesh",
         "scaledFinalScore": 54,
@@ -66,6 +74,7 @@
     },
     {
         "name": "David Black",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 59,
@@ -74,6 +83,7 @@
     },
     {
         "name": "Grace Green",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 55,
@@ -83,6 +93,7 @@
 
   {
         "name": "John Doe",
+      "school": "xyz School university and college",
         "category": "Senior",
       "country": "Bangladesh",
         "scaledFinalScore": 58,
@@ -91,6 +102,7 @@
     },
     {
         "name": "Jane Smith",
+        "school": "xyz School university and college",
         "category": "Senior",
         "country": "Bangladesh",
         "scaledFinalScore": 56,
@@ -99,6 +111,7 @@
     },
     {
         "name": "Alice Brown",
+        "school": "xyz School university and college",
         "category": "Senior",
         "country": "Bangladesh",
         "scaledFinalScore": 54,
@@ -107,6 +120,7 @@
     },
     {
         "name": "David Black",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Indonesia",
         "scaledFinalScore": 59,
@@ -115,6 +129,7 @@
     },
     {
         "name": "Grace Green",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 55,
@@ -124,6 +139,7 @@
 
   {
         "name": "John Doe",
+      "school": "xyz School university and college",
         "category": "Senior",
       "country": "Bangladesh",
         "scaledFinalScore": 48,
@@ -132,6 +148,7 @@
     },
     {
         "name": "Jane Smith",
+        "school": "xyz School university and college",
         "category": "Senior",
         "country": "Bangladesh",
         "scaledFinalScore": 46,
@@ -140,6 +157,7 @@
     },
     {
         "name": "Alice Brown",
+        "school": "xyz School university and college",
         "category": "Senior",
         "country": "Bangladesh",
         "scaledFinalScore": 44,
@@ -148,6 +166,7 @@
     },
     {
         "name": "David Black",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 49,
@@ -156,6 +175,7 @@
     },
     {
         "name": "Grace Green",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 45,
@@ -165,6 +185,7 @@
 
   {
         "name": "John Doe",
+      "school": "xyz School university and college",
         "category": "Senior",
       "country": "Bangladesh",
         "scaledFinalScore": 38,
@@ -173,6 +194,7 @@
     },
     {
         "name": "Jane Smith",
+        "school": "xyz School university and college",
         "category": "Senior",
         "country": "Bangladesh",
         "scaledFinalScore": 36,
@@ -181,6 +203,7 @@
     },
     {
         "name": "Alice Brown",
+        "school": "xyz School university and college",
         "category": "Senior",
         "country": "Bangladesh",
         "scaledFinalScore": 34,
@@ -189,6 +212,7 @@
     },
     {
         "name": "David Black",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 39,
@@ -197,6 +221,7 @@
     },
     {
         "name": "Grace Green",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 35,
@@ -205,6 +230,7 @@
     },
     {
         "name": "David Black",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 38,
@@ -213,6 +239,7 @@
     },
     {
         "name": "David Black",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 29,
@@ -221,6 +248,7 @@
     },
     {
         "name": "David Black",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 19,
@@ -229,6 +257,7 @@
     },
     {
         "name": "David Black",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 29,
@@ -237,6 +266,7 @@
     },
     {
         "name": "David Black",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Bangladesh",
         "scaledFinalScore": 39,
@@ -245,6 +275,7 @@
     },
     {
         "name": "David Black",
+        "school": "xyz School university and college",
         "category": "Junior",
         "country": "Indonesia",
         "scaledFinalScore": 39,
