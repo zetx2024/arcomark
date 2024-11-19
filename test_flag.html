@@ -124,21 +124,18 @@
         .honorable-mention-svg {
             width: 25px;
             height: 25px;
-
         }
 
          /* SVG Medals */
         .medal {
             width: 25px;
             height: 25px;
-           
         }
 
         /* SVG for Honorable Mention */
         .honorable-mention-svg {
             width: 25px;
             height: 25px;
-   
         }
 
         /* View Proposal button style */
@@ -180,7 +177,13 @@
             .view-proposal {
                 padding: 4px 8px;
             }
+
+            .medal, .honorable-mention-svg {
+                width: 20px;
+                height: 20px;
+            }
         }
+
         .video-pitch-btn {
             padding: 5px 10px;
             background-color: #007bff;
@@ -190,6 +193,7 @@
             text-decoration: none;
             border-radius: 5px;
         }
+
         .video-pitch-btn:disabled {
             background-color: #ccc;
             cursor: not-allowed;
@@ -213,7 +217,7 @@
             <th>Country</th>
             <th>Score</th>
             <th>View Proposal</th>
-            <th>Video Pitch</th> <!-- New Video Pitch Column -->
+            <th>Video Pitch</th>
         </tr>
     </thead>
     <tbody>
@@ -281,13 +285,13 @@ async function generateTable(category, studentsData) {
         // Disable the Video Pitch button for students with rank > 10
         const isVideoPitchEnabled = student.rank <= 10;
         
-        row.innerHTML = `
+        row.innerHTML = ` 
             <td>${getMedalSVG(student.rank)}</td>
             <td>${student.name}</td>
             <td><span class="country-flag">${flagSVG}</span></td>
             <td>${student.scaledFinalScore}</td>
-            <td><a href="${student.viewProposal}" class="view-proposal" target="_blank">View Proposal</a></td>
-            <td><button class="video-pitch-btn" ${isVideoPitchEnabled ? '' : 'disabled'}>Video Pitch</button></td> <!-- Video Pitch Column -->
+            <td><a href="${student.viewProposal}" class="view-proposal" target="_blank" ${student.rank > 10 ? 'disabled' : ''}>View Proposal</a></td>
+            <td><button class="video-pitch-btn" ${isVideoPitchEnabled ? '' : 'disabled'}>Video Pitch</button></td> 
         `;
 
         // Add event listener for double-clicking any table element to copy rank link
