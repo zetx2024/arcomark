@@ -185,6 +185,10 @@
 
             .video-pitch-btn {
                 padding: 4px 8px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
             }
         }
 
@@ -200,6 +204,11 @@
 
             .video-pitch-btn {
                 padding: 4px 8px;
+                padding: 4px 8px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
             }
         }
 
@@ -302,7 +311,7 @@ async function generateTable(category, studentsData) {
             <td><span class="country-flag">${flagSVG}</span></td>
             <td>${student.scaledFinalScore}</td>
             <td><a href="${student.viewProposal}" target="_blank">
-    <button class="view-proposal" ${isEnabled ? '' : 'disabled'}>View Proposal</button>
+    <button class="video-pitch-btn" ${isEnabled ? '' : 'disabled'}>View Proposal</button>
   </a></td>
   <td><a href="${student.videoPitch}" target="_blank">
     <button class="video-pitch-btn" ${isEnabled ? '' : 'disabled'}>Video Pitch</button>
