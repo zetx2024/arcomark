@@ -333,10 +333,8 @@ async function generateTable(category, studentsData) {
 
         tableBody.appendChild(row);
     });
-}
 
-
-        // Check if the URL contains a rank query parameter after the table is generated
+    // Check if the URL contains a rank query parameter after the table is generated
     const urlParams = new URLSearchParams(window.location.search);
     const rankFromUrl = urlParams.get('rank');
     const categoryFromUrl = urlParams.get('category');
