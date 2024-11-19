@@ -15,10 +15,11 @@
 
     <style>
         .iconify--twemoji {
-      width: 20px;  /* Set desired width */
-      height: 20px; /* Set desired height */
-    }
-       body {
+            width: 20px;
+            height: 20px;
+        }
+
+        body {
             font-family: Arial, sans-serif;
             margin: 0;
             background-color: #f9f9f9;
@@ -87,65 +88,27 @@
         }
 
         .video-pitch-btn {
-                padding: 4px 8px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 5px;
-            }
-
-        /* Shake Effect */
-        .shake {
-            animation: shake 0.5s ease-in-out;
+            padding: 4px 8px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
         }
-
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
-        }
-
-        /* Zoom In / Zoom Out Effect */
-        .zoom {
-            animation: zoomInOut 1s ease-in-out;
-        }
-
-        @keyframes zoomInOut {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        /* Medal styles */
-        .gold { background-color: gold; color: black; }
-        .silver { background-color: silver; color: black; }
-        .bronze { background-color: #cd7f32; color: black; }
-
-        .honorable { background-color: #f8f8f8; color: #555; }
 
         .honorable-mention {
             background-color: #f0e68c;
         }
 
-        /* SVG Medals */
         .medal {
             width: 25px;
             height: 25px;
         }
+
         .country-flag {
             width: 20px;
             height: 20px;
         }
 
-        /* SVG for Honorable Mention */
-        .honorable-mention-svg {
-            width: 25px;
-            height: 25px;
-        }
-
-        /* View Proposal button style */
         .view-proposal {
             background-color: #007bff;
             color: white;
@@ -193,10 +156,6 @@
 
             .video-pitch-btn {
                 padding: 4px 8px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 5px;
             }
         }
 
@@ -212,20 +171,20 @@
 
             .video-pitch-btn {
                 padding: 4px 8px;
-                padding: 4px 8px;
-                background-color: #007bff;
-                color: white;
-                border: none;
-                border-radius: 5px;
             }
         }
 
-        
-
-        .video-pitch-btn:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
+        /* Style for student name and school */
+        .student-name {
+            font-size: 1.1em;
+            font-weight: bold;
         }
+
+        .school-name {
+            font-size: 0.9em;
+            color: #777;
+        }
+
     </style>
 </head>
 <body>
@@ -265,7 +224,7 @@ async function fetchStudentData() {
     return data;
 }
 
-// Fetch country flag SVG data
+// Function to fetch country flag SVG data
 async function fetchCountryFlags() {
     const response = await fetch('flags.json');
     const data = await response.json();
@@ -315,7 +274,10 @@ async function generateTable(category, studentsData) {
 
         row.innerHTML = `
             <td>${getMedalSVG(student.rank)}</td>
-            <td>${student.name}</td>
+            <td>
+                <div class="student-name">${student.name}</div>
+                <div class="school-name">${student.school}</div>
+            </td>
             <td><span class="country-flag">${flagSVG}</span></td>
             <td>${student.scaledFinalScore}</td>
             <td><a href="${student.viewProposal}" target="_blank">
@@ -382,6 +344,7 @@ function copyRankLink(category, rank) {
 
     alert(`Rank link copied to clipboard: ${rankLink}`);
 }
+
 // Function to update meta tags dynamically based on rank and student details
 function updateMetaTags(category, rank) {
     const student = studentsData.find(s => s.category === category && s.rank === parseInt(rank));
@@ -402,7 +365,6 @@ function updateMetaTags(category, rank) {
     document.querySelector('meta[name="twitter:description"]').setAttribute('content', description);
 }
 
-    
 // Toggle button functionality for Junior and Senior categories
 document.getElementById('juniorButton').addEventListener('click', async () => {
     document.getElementById('juniorButton').classList.add('active');
