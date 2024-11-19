@@ -198,6 +198,11 @@
             background-color: #ccc;
             cursor: not-allowed;
         }
+
+        .country-flag img {
+            width: 25px;
+            height: 25px;
+        }
     </style>
 </head>
 <body>
@@ -282,16 +287,16 @@ async function generateTable(category, studentsData) {
 
         const flagSVG = getCountryFlag(student.country, flags);  // Get the country flag
 
-        // Disable the Video Pitch button for students with rank > 10
-        const isVideoPitchEnabled = student.rank <= 10;
-        
-        row.innerHTML = ` 
+        // Disable the View Proposal and Video Pitch buttons for students with rank > 10
+        const isEnabled = student.rank <= 10;
+
+        row.innerHTML = `
             <td>${getMedalSVG(student.rank)}</td>
             <td>${student.name}</td>
             <td><span class="country-flag">${flagSVG}</span></td>
             <td>${student.scaledFinalScore}</td>
-            <td><a href="${student.viewProposal}" class="view-proposal" target="_blank" ${student.rank > 10 ? 'disabled' : ''}>View Proposal</a></td>
-            <td><button class="video-pitch-btn" ${isVideoPitchEnabled ? '' : 'disabled'}>Video Pitch</button></td> 
+            <td><a href="${student.viewProposal}" class="view-proposal" target="_blank" ${isEnabled ? '' : 'disabled'}>View Proposal</a></td>
+            <td><button class="video-pitch-btn" ${isEnabled ? '' : 'disabled'}>Video Pitch</button></td>
         `;
 
         // Add event listener for double-clicking any table element to copy rank link
