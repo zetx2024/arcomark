@@ -3,190 +3,221 @@
         "name": "John Doe",
         "category": "Senior",
         "scaledFinalScore": 98,
-        "viewProposal": "https://example.com/proposal1"
+        "viewProposal": "https://example.com/proposal1",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Jane Smith",
         "category": "Senior",
         "scaledFinalScore": 96,
-        "viewProposal": "https://example.com/proposal2"
+        "viewProposal": "https://example.com/proposal2",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Alice Brown",
         "category": "Senior",
         "scaledFinalScore": 94,
-        "viewProposal": "https://example.com/proposal3"
+        "viewProposal": "https://example.com/proposal3",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "David Black",
         "category": "Junior",
         "scaledFinalScore": 89,
-        "viewProposal": "https://example.com/proposal4"
+        "viewProposal": "https://example.com/proposal4",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Grace Green",
         "category": "Junior",
         "scaledFinalScore": 85,
-        "viewProposal": "https://example.com/proposal5"
+        "viewProposal": "https://example.com/proposal5",
+        "videoPitch": "https://example.com/video19"
     },
 
   {
         "name": "John Doe",
         "category": "Senior",
         "scaledFinalScore": 58,
-        "viewProposal": "https://example.com/proposal1"
+        "viewProposal": "https://example.com/proposal1",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Jane Smith",
         "category": "Senior",
         "scaledFinalScore": 56,
-        "viewProposal": "https://example.com/proposal2"
+        "viewProposal": "https://example.com/proposal2",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Alice Brown",
         "category": "Senior",
         "scaledFinalScore": 54,
-        "viewProposal": "https://example.com/proposal3"
+        "viewProposal": "https://example.com/proposal3",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "David Black",
         "category": "Junior",
         "scaledFinalScore": 59,
-        "viewProposal": "https://example.com/proposal4"
+        "viewProposal": "https://example.com/proposal4",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Grace Green",
         "category": "Junior",
         "scaledFinalScore": 55,
-        "viewProposal": "https://example.com/proposal5"
+        "viewProposal": "https://example.com/proposal5",
+        "videoPitch": "https://example.com/video19"
     },
 
   {
         "name": "John Doe",
         "category": "Senior",
         "scaledFinalScore": 58,
-        "viewProposal": "https://example.com/proposal1"
+        "viewProposal": "https://example.com/proposal1",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Jane Smith",
         "category": "Senior",
         "scaledFinalScore": 56,
-        "viewProposal": "https://example.com/proposal2"
+        "viewProposal": "https://example.com/proposal2",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Alice Brown",
         "category": "Senior",
         "scaledFinalScore": 54,
-        "viewProposal": "https://example.com/proposal3"
+        "viewProposal": "https://example.com/proposal3",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "David Black",
         "category": "Junior",
         "scaledFinalScore": 59,
-        "viewProposal": "https://example.com/proposal4"
+        "viewProposal": "https://example.com/proposal4",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Grace Green",
         "category": "Junior",
         "scaledFinalScore": 55,
-        "viewProposal": "https://example.com/proposal5"
+        "viewProposal": "https://example.com/proposal5",
+        "videoPitch": "https://example.com/video19"
     },
 
   {
         "name": "John Doe",
         "category": "Senior",
         "scaledFinalScore": 48,
-        "viewProposal": "https://example.com/proposal1"
+        "viewProposal": "https://example.com/proposal1",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Jane Smith",
         "category": "Senior",
         "scaledFinalScore": 46,
-        "viewProposal": "https://example.com/proposal2"
+        "viewProposal": "https://example.com/proposal2",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Alice Brown",
         "category": "Senior",
         "scaledFinalScore": 44,
-        "viewProposal": "https://example.com/proposal3"
+        "viewProposal": "https://example.com/proposal3",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "David Black",
         "category": "Junior",
         "scaledFinalScore": 49,
-        "viewProposal": "https://example.com/proposal4"
+        "viewProposal": "https://example.com/proposal4",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Grace Green",
         "category": "Junior",
         "scaledFinalScore": 45,
-        "viewProposal": "https://example.com/proposal5"
+        "viewProposal": "https://example.com/proposal5",
+        "videoPitch": "https://example.com/video19"
     },
 
   {
         "name": "John Doe",
         "category": "Senior",
         "scaledFinalScore": 38,
-        "viewProposal": "https://example.com/proposal1"
+        "viewProposal": "https://example.com/proposal1",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Jane Smith",
         "category": "Senior",
         "scaledFinalScore": 36,
-        "viewProposal": "https://example.com/proposal2"
+        "viewProposal": "https://example.com/proposal2",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Alice Brown",
         "category": "Senior",
         "scaledFinalScore": 34,
-        "viewProposal": "https://example.com/proposal3"
+        "viewProposal": "https://example.com/proposal3",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "David Black",
         "category": "Junior",
         "scaledFinalScore": 39,
-        "viewProposal": "https://example.com/proposal4"
+        "viewProposal": "https://example.com/proposal4",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "Grace Green",
         "category": "Junior",
         "scaledFinalScore": 35,
-        "viewProposal": "https://example.com/proposal5"
+        "viewProposal": "https://example.com/proposal5",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "David Black",
         "category": "Junior",
         "scaledFinalScore": 38,
-        "viewProposal": "https://example.com/proposal4"
+        "viewProposal": "https://example.com/proposal4",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "David Black",
         "category": "Junior",
         "scaledFinalScore": 29,
-        "viewProposal": "https://example.com/proposal4"
+        "viewProposal": "https://example.com/proposal4",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "David Black",
         "category": "Junior",
         "scaledFinalScore": 19,
-        "viewProposal": "https://example.com/proposal4"
+        "viewProposal": "https://example.com/proposal4",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "David Black",
         "category": "Junior",
         "scaledFinalScore": 29,
-        "viewProposal": "https://example.com/proposal4"
+        "viewProposal": "https://example.com/proposal4",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "David Black",
         "category": "Junior",
         "scaledFinalScore": 39,
-        "viewProposal": "https://example.com/proposal4"
+        "viewProposal": "https://example.com/proposal4",
+        "videoPitch": "https://example.com/video19"
     },
     {
         "name": "David Black",
         "category": "Junior",
         "scaledFinalScore": 39,
-        "viewProposal": "https://example.com/proposal4"
+        "viewProposal": "https://example.com/proposal4",
+        "videoPitch": "https://example.com/video19"
     }
 ]
