@@ -122,6 +122,10 @@
             width: 25px;
             height: 25px;
         }
+        .country-flag {
+            width: 25px;
+            height: 25px;
+        }
 
         /* SVG for Honorable Mention */
         .honorable-mention-svg {
@@ -140,9 +144,6 @@
             border-radius: 5px;
         }
 
-        .view-proposal:hover {
-            background-color: #0056b3;
-        }
         .video-proposal:disabled {
             background-color: #ccc;
             cursor: not-allowed;
@@ -188,7 +189,7 @@
                 padding: 4px 8px;
             }
 
-            .medal, .honorable-mention-svg {
+            .medal, .honorable-mention-svg, .country-flag {
                 width: 18px;
                 height: 18px;
             }
@@ -198,11 +199,7 @@
             }
         }
 
-        .country-flag {
-            width: 25px;
-            height: 25px;
-            object-fit: contain;
-        }
+        
 
         .video-pitch-btn:disabled {
             background-color: #ccc;
@@ -300,7 +297,7 @@ async function generateTable(category, studentsData) {
             <td>${student.name}</td>
             <td><span class="country-flag">${flagSVG}</span></td>
             <td>${student.scaledFinalScore}</td>
-            <td><a href="${student.viewProposal}" class="view-proposal" target="_blank" ${isEnabled ? '' : 'disabled'}>View Proposal</a></td>
+            <td><button  class="view-proposal" ${isEnabled ? '' : 'disabled'}><a href="${student.viewProposal}" target="_blank">View Proposal</a></button></td>
             <td><button class="video-pitch-btn" ${isEnabled ? '' : 'disabled'}>Video Pitch</button></td>
         `;
 
