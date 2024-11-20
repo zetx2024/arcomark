@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Paper Scorecard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sstyle.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Research Paper Scorecards</h1>
+        
+        <!-- Search bar to search for students -->
+        <div class="search-container">
+            <input type="text" id="student-search" placeholder="Search for student name or ID">
+            <button id="search-btn">Search</button>
+        </div>
+        
+        <!-- Student details and scorecard display -->
+        <div id="student-details">
+            <!-- Student details will be displayed here -->
+        </div>
+        
+        <!-- Button to download the scorecard -->
+        <button id="download-pdf" style="display:none;">Download My Scorecard</button>
+        
+        <img id="logo" src="logo.png" alt="University Logo" class="logo">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.19/jspdf.plugin.autotable.min.js"></script>
+
+    <script src="sscript.js"></script>
+</body>
+</html>
