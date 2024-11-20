@@ -266,10 +266,7 @@
 
     </style>
 
-    <!-- Add Audio Element -->
-<audio id="congratsAudio" src="https://eptonline.org/assets/achievements.mp3" preload="auto"></audio>
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
@@ -300,7 +297,10 @@
     <button class="share-button" id="shareButton">Share Rank</button>
 </div>
 
+    <!-- Add Audio Element -->
+<audio id="congratsAudio" src="https://eptonline.org/assets/achievements.mp3" preload="auto"></audio>
 
+   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     
 <script>
 // Function to fetch the student data and country flags
@@ -508,7 +508,8 @@ document.getElementById('seniorButton').addEventListener('click', async () => {
 });
 
 init();
-
+</script>
+    <script type="text/javascript">
 // Function to trigger the confetti effect
 function triggerConfetti() {
     // Confetti options with only Gold, Silver, and Bronze colors
