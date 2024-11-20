@@ -14,7 +14,229 @@
     <title>Student Details with Rank Sharing</title>
 
     <style>
-        /* Your styles remain unchanged */
+        .iconify--twemoji {
+      width: 20px;  /* Set desired width */
+      height: 20px; /* Set desired height */
+    }
+         /* Style for student name and school */
+        .student-name {
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .school-name {
+            font-size: 0.7em;
+            color: #777;
+        }
+
+        
+       body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .share-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .share-button:hover {
+            background-color: #45a049;
+        }
+
+        .toggle-buttons {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .toggle-buttons button {
+            padding: 10px 20px;
+            background-color: #ddd;
+            color: #333;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-buttons button:hover {
+            background-color: #aaa;
+        }
+
+        .toggle-buttons button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .video-pitch-btn {
+                padding: 4px 8px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+            }
+
+      /* Shake Effect */
+.shake {
+    animation: shake 3s ease-in-out infinite; /* Added 'infinite' to make it loop */
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* Zoom In / Zoom Out Effect */
+.zoom {
+    animation: zoomInOut 3s ease-in-out infinite; /* Added 'infinite' to make it loop */
+}
+
+@keyframes zoomInOut {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+        /* Medal styles */
+        .gold { background-color: gold; color: black; }
+        .silver { background-color: silver; color: black; }
+        .bronze { background-color: #cd7f32; color: black; }
+
+        .honorable { background-color: #f8f8f8; color: #555; }
+
+        .honorable-mention {
+            background-color: #f0e68c;
+        }
+
+        /* SVG Medals */
+        .medal {
+            width: 25px;
+            height: 25px;
+        }
+        .country-flag {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* SVG for Honorable Mention */
+        .honorable-mention-svg {
+            width: 25px;
+            height: 25px;
+        }
+
+        /* View Proposal button style */
+        .view-proposal {
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .video-proposal:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .toggle-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .toggle-buttons button {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+
+            .medal, .honorable-mention-svg, .iconify--twemoji {
+                width: 20px;
+                height: 20px;
+            }
+
+            .view-proposal {
+                padding: 4px 8px;
+            }
+
+            .video-pitch-btn {
+                padding: 4px 8px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .view-proposal {
+                padding: 4px 8px;
+            }
+
+            .medal, .honorable-mention-svg, .country-flag, .iconify--twemoji {
+                width: 18px;
+                height: 18px;
+            }
+
+            .video-pitch-btn {
+                padding: 4px 8px;
+                padding: 4px 8px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+            }
+        }
+
+        
+
+        .video-pitch-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -46,6 +268,11 @@
     <button class="share-button" id="shareButton">Share Rank</button>
 </div>
 
+<!-- Add Audio Element -->
+<audio id="congratsAudio" src="https://eptonline.org/assets/achievements.mp3" preload="auto"></audio>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.0/dist/confetti.browser.min.js"></script>
+    
 <script>
 // Function to fetch the student data and country flags
 async function fetchStudentData() {
@@ -109,11 +336,11 @@ async function generateTable(category, studentsData) {
             <td><span class="country-flag">${flagSVG}</span></td>
             <td>${student.scaledFinalScore}</td>
             <td><a href="${student.viewProposal}" target="_blank">
-                <button class="video-pitch-btn" ${isEnabled ? '' : 'disabled'}>View Proposal</button>
-            </a></td>
-            <td><a href="${student.videoPitch}" target="_blank">
-                <button class="video-pitch-btn" ${isEnabled ? '' : 'disabled'}>View Pitch</button>
-            </a></td>
+    <button class="video-pitch-btn" ${isEnabled ? '' : 'disabled'}>View Proposal</button>
+  </a></td>
+  <td><a href="${student.videoPitch}" target="_blank">
+    <button class="video-pitch-btn" ${isEnabled ? '' : 'disabled'}>View Pitch</button>
+  </a></td>
         `;
 
         // Add event listener for double-clicking any table element to copy rank link
@@ -133,7 +360,7 @@ async function generateTable(category, studentsData) {
         updateMetaTags(categoryFromUrl, rankFromUrl, studentsData);  // Update meta tags when a rank is passed
     }
 }
-
+    
 // Function to get Medal SVG based on rank
 function getMedalSVG(rank) {
     switch (rank) {
@@ -172,7 +399,6 @@ function copyRankLink(category, rank) {
 
     alert(`Rank link copied to clipboard: ${rankLink}`);
 }
-
 // Function to update meta tags dynamically based on rank and student details
 function updateMetaTags(category, rank, studentsData) {
     const student = studentsData.find(s => s.category === category && s.rank === parseInt(rank));
@@ -191,6 +417,44 @@ function updateMetaTags(category, rank, studentsData) {
     // Update Twitter meta tags
     document.querySelector('meta[name="twitter:title"]').setAttribute('content', title);
     document.querySelector('meta[name="twitter:description"]').setAttribute('content', description);
+}
+
+    
+// Toggle button functionality for Junior and Senior categories
+document.getElementById('juniorButton').addEventListener('click', async () => {
+    document.getElementById('juniorButton').classList.add('active');
+    document.getElementById('seniorButton').classList.remove('active');
+    const studentsData = await fetchStudentData();
+    generateTable('Junior', studentsData);
+});
+
+document.getElementById('seniorButton').addEventListener('click', async () => {
+    document.getElementById('seniorButton').classList.add('active');
+    document.getElementById('juniorButton').classList.remove('active');
+    const studentsData = await fetchStudentData();
+    generateTable('Senior', studentsData);
+});
+
+// Initialize the page to show Junior category by default
+// Initialize the page based on the URL query parameter for category
+async function init() {
+    const studentsData = await fetchStudentData();
+
+    // Check if there is a 'category' query parameter in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category') || 'Junior';  // Default to 'Junior' if no category is specified
+
+    // Set the active class on the appropriate toggle button
+    if (category === 'Senior') {
+        document.getElementById('seniorButton').classList.add('active');
+        document.getElementById('juniorButton').classList.remove('active');
+    } else {
+        document.getElementById('juniorButton').classList.add('active');
+        document.getElementById('seniorButton').classList.remove('active');
+    }
+
+    // Generate the table for the selected category
+    generateTable(category, studentsData);
 }
 
 // Toggle button functionality for Junior and Senior categories
@@ -214,28 +478,42 @@ document.getElementById('seniorButton').addEventListener('click', async () => {
     history.pushState(null, '', '?category=Senior');
 });
 
-// Initialize the page to show Junior category by default
-async function init() {
-    const studentsData = await fetchStudentData();
+init();
 
-    // Check if there is a 'category' query parameter in the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get('category') || 'Junior';  // Default to 'Junior' if no category is specified
+// Function to trigger the confetti effect
+function triggerConfetti() {
+    // Confetti options with only Gold, Silver, and Bronze colors
+    const colors = ['#FFD700', '#C0C0C0', '#CD7F32'];
 
-    // Set the active class on the appropriate toggle button
-    if (category === 'Senior') {
-        document.getElementById('seniorButton').classList.add('active');
-        document.getElementById('juniorButton').classList.remove('active');
-    } else {
-        document.getElementById('juniorButton').classList.add('active');
-        document.getElementById('seniorButton').classList.remove('active');
-    }
+    // Create a container for the confetti
+    const confettiContainer = document.createElement('div');
+    confettiContainer.id = 'confetti-container';
+    document.body.appendChild(confettiContainer);
 
-    // Generate the table for the selected category
-    generateTable(category, studentsData);
+    // Confetti animation
+    confetti({
+        particleCount: 300,
+        spread: 90,
+        origin: { y: 0.5 },
+        colors: colors,
+    });
+
+    setTimeout(() => {
+        document.body.removeChild(confettiContainer);  // Remove confetti after 5 seconds
+    }, 5000); // 5 seconds
 }
 
-init();
+// Function to play the congratulations audio
+function playCongratsAudio() {
+    const audio = document.getElementById('congratsAudio');
+    audio.play();
+}
+
+// Initialize the page with confetti and audio
+window.onload = () => {
+    triggerConfetti();  // Trigger the confetti effect
+    playCongratsAudio();  // Play the congratulation audio
+};    
 </script>
 
 </body>
