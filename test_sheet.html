@@ -144,7 +144,7 @@
              let studentsData = [];
 
             // Fetch student data from JSON file
-            fetch('finalist2024.json')
+            fetch('students.json')
                 .then(response => response.json())
                 .then(data => {
                     studentsData = data;
@@ -155,7 +155,7 @@
             // Search function for students
             document.getElementById("search-btn").addEventListener("click", function () {
                 const searchTerm = document.getElementById("student-search").value.toLowerCase();
-                const student = studentsData.students.find(s => 
+                const student = studentsData.find(s => 
                     s.name.toLowerCase().includes(searchTerm) || 
                     s.student_id.toLowerCase().includes(searchTerm)
                 );
