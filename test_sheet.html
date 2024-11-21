@@ -197,16 +197,16 @@
                 // Add content to the page
                 container.innerHTML = `
                     <h1>Student Marksheet</h1>
-                    <p><strong>Name:</strong> ${name}</p>
                     <p><strong>Student ID:</strong> ${student_id}</p>
-                    <p><strong>Institution:</strong> ${institution}</p>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Institution:</strong> ${school}</p>
                     <p><strong>Category:</strong> ${category} | <strong>Year:</strong> ${year}</p>
                     <p class="proposal-title"><strong>Research Proposal Title:</strong> ${research_proposal_title}</p>
 
                     <div class="section-title">Research Paper Score: ${researchPaperScore}/100</div>
                     <table>
                         <thead>
-                            <tr><th>Criteria</th><th>Student Obtained Marks</th><th>Full Marks</th></tr>
+                            <tr><th>Criteria</th><th>Obtained Marks</th><th>Full Marks</th></tr>
                         </thead>
                         <tbody>
                             <tr><td>Research Problem</td><td>${paperScores.research_problem}</td><td>20</td></tr>
@@ -221,7 +221,7 @@
                     <div class="section-title">Presentation Score: ${presentationScore}/100</div>
                     <table>
                         <thead>
-                            <tr><th>Criteria</th><th>Student Obtained Marks</th><th>Full Marks</th></tr>
+                            <tr><th>Criteria</th><th>Obtained Marks</th><th>Full Marks</th></tr>
                         </thead>
                         <tbody>
                             <tr><td>Persuasiveness</td><td>${presentationScores.persuasiveness}</td><td>20</td></tr>
@@ -237,24 +237,26 @@
                             <h3>Plagiarism Check</h3>
                             <p><strong>Plagiarism Percentile:</strong> ${paperScores.plagiarism_check_percentile}%</p>
                             <p><strong>Plagiarism Penalty:</strong> ${plagiarismPenalty}</p>
-                            <p><strong>Plagiarism Adjusted Score:</strong> ${submissionScore} - ${plagiarismPenalty} = ${plagiarismAdjustedScore} </p>
                         </div>
                         <div>
-                            <h3>Submission Score (Research + Presentation)</h3>
+                            <h3>Submission Score (Research Proposal + Presentation)</h3>
                             <p><strong>Submission Score:</strong> ${researchPaperScore} + ${presentationScore} = ${submissionScore}/200</p>
                         </div>
                     </div>
 
                     <div class="score-info">
                         <div>
-                            <h3>Final Score</h3>
+                            <h3>Final Score (Submission Score - Plagiarism Score)</h3>
+                            <p><strong>Plagiarism Adjusted Score:</strong> ${submissionScore} - ${plagiarismPenalty} = ${plagiarismAdjustedScore} </p>
                             <p><strong>Final Score:</strong> ${finalScore}</p>
                         </div>
                     </div>
 
                     <div class="comment-section">
+                     <p><strong>Research Paper:</strong> <a href="${student.viewProposal}" target="_blank">View Proposal</a></p>
                         <h3>Proposal Comment:</h3>
                         <p>${proposal_comment}</p>
+                         <p><strong>Video Pitch:</strong> <a href="${student.videoPitch}" target="_blank">View Pitch</a></p>
                         <h3>Presentation Comment:</h3>
                         <p>${presentation_comment}</p>
                     </div>
