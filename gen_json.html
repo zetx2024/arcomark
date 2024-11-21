@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Data JSON Generator</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+.container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 800px;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+input[type="file"] {
+    margin: 20px 0;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.json-output {
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 14px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.copy-btn {
+    background-color: #008CBA;
+}
+
+.copy-btn:hover {
+    background-color: #007bb5;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Data JSON Generator</h1>
+        <input type="file" id="file-input" accept=".xls, .xlsx" />
+        <button id="generate-json-btn">Generate JSON</button>
+        <pre id="json-output" class="json-output"></pre>
+        <button id="copy-btn" class="copy-btn">Copy JSON to Clipboard</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script>
+      document.getElementById("generate-json-btn").addEventListener("click", generateJSON);
+document.getElementById("copy-btn").addEventListener("click", copyToClipboard);
+
+function generateJSON() {
+    const fileInput = document.getElementById("file-input");
+    const file = fileInput.files[0];
+    if (!file) {
+        alert("Please upload an Excel file.");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const data = event.target.result;
+        const workbook = XLSX.read(data, { type: "binary" });
+
+        // Assuming the first sheet contains the data
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+        const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+        const formattedData = jsonData.map(row => formatStudentData(row));
+        document.getElementById("json-output").textContent = JSON.stringify(formattedData, null, 2);
+    };
+
+    reader.readAsBinaryString(file);
+}
+
+function formatStudentData(row) {
+    return {
+        student_id: row["Student ID"],
+        name: row["Name"],
+        school: row["School"],
+        category: row["Category"],
+        year: row["Year"],
+        country: row["Country"],
+        research_proposal_title: row["Research Proposal Title"],
+        research_paper: {
+            research_problem: row["Research Problem"] || 0,
+            existing_literature: row["Existing Literature"] || 0,
+            research_question: row["Research Question"] || 0,
+            methodology: row["Methodology"] || 0,
+            research_topic: row["Research Topic"] || 0,
+            quality_of_writing: row["Quality of Writing"] || 0,
+            plagiarism_check_percentile: row["Plagiarism Check Percentile"] || 0,
+            presentation: {
+                persuasiveness: row["Persuasiveness"] || 0,
+                video_quality: row["Video Quality"] || 0,
+                research_problem: row["Research Problem Presentation"] || 0,
+                research_question: row["Research Question Presentation"] || 0,
+                methodology: row["Methodology Presentation"] || 0
+            }
+        },
+        plagiarismPenalty: row["Plagiarism Penalty"] || 0,
+        researchPaperScore: row["Research Paper Score"] || 0,
+        presentationScore: row["Presentation Score"] || 0,
+        submissionScore: row["Submission Score"] || 0,
+        scaledFinalScore: row["Scaled Final Score"] || 0,
+        viewProposal: row["View Proposal"] || "",
+        videoPitch: row["Video Pitch"] || "",
+        proposal_comment: row["Proposal Comment"] || "No Comment.",
+        presentation_comment: row["Presentation Comment"] || "No Comment."
+    };
+}
+
+function copyToClipboard() {
+    const jsonOutput = document.getElementById("json-output").textContent;
+    navigator.clipboard.writeText(jsonOutput).then(() => {
+        alert("JSON data copied to clipboard!");
+    }).catch(err => {
+        alert("Failed to copy text: " + err);
+    });
+}
+
+    </script>
+</body>
+</html>
