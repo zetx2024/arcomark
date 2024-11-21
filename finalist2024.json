@@ -99,7 +99,7 @@
     "viewProposal": "https://drive.google.com/open?id=1VIr1OT-mS8QESBGs7KlaT--363ALgQrN",
     "videoPitch": "https://drive.google.com/file/d/1_wB5kFTwDRz-YCAczeBsuj1JiBOsigT0/view?usp=sharing",
     "proposal_comment": "No Comment.",
-    "presentation_comment": "AI Voice."
+    "presentation_comment": "AI Voice that is why you get avg point."
   },
   {
     "student_id": "WT9RZoEx",
@@ -575,7 +575,7 @@
     "viewProposal": "https://drive.google.com/open?id=1MdvKbjZwuIe6f2PJei1b0rGIK2RNx-NG",
     "videoPitch": "https://drive.google.com/drive/folders/1gfUo9WaoYHi3uC7oxFHf4wAnDlwBiPOh",
     "proposal_comment": "You submitted full paper. This is limited to 5-7 pages max.",
-    "presentation_comment": "No Comment."
+    "presentation_comment": "AI Voices that's why you get avg number."
   },
   {
     "student_id": "lagDCbw8",
@@ -895,8 +895,8 @@
       "research_problem": 14,
       "existing_literature": 5,
       "research_question": 16,
-      "methodology": 16,
-      "research_topic": 13,
+      "methodology": 20,
+      "research_topic": 15,
       "quality_of_writing": 3,
       "plagiarism_check_percentile": 10,
       "presentation": {
@@ -908,10 +908,10 @@
       }
     },
     "plagiarismPenalty": 0,
-    "researchPaperScore": 67,
+    "researchPaperScore": 73,
     "presentationScore": 78,
-    "submissionScore": 145,
-    "scaledFinalScore": 145,
+    "submissionScore": 151,
+    "scaledFinalScore": 151,
     "viewProposal": "https://drive.google.com/open?id=1uYUa0egRtK5DKlDGvPcfd1rXM45c2ori",
     "videoPitch": "https://drive.google.com/file/d/1PGlE_OuJRnjz84SXA_hsFBkP17AeIJCh/view?usp=sharing",
     "proposal_comment": "No Comment.",
