@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marksheet</title>
+    <style>
+        /* CSS styles are unchanged */
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Student Marksheet</h1>
+
+        <div id="search-container" style="text-align: center; margin-bottom: 20px;">
+            <label for="student-search">Enter Student Name or ID: </label>
+            <input type="text" id="student-search" placeholder="Search student">
+            <button class="btn" id="search-btn">Search</button>
+        </div>
+
+        <div id="student-details"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let studentsData = [];
+
+            // Fetch student data from JSON file
+            fetch('finalist2024.json')
+                .then(response => response.json())
+                .then(data => {
+                    studentsData = data;
+                    console.log("Students data loaded:", studentsData);
+                })
+                .catch(error => console.error('Error loading student data:', error));
+
+            // Search function for students
+            document.getElementById("search-btn").addEventListener("click", function () {
+                const searchTerm = document.getElementById("student-search").value.toLowerCase();
+                const student = studentsData.find(s => 
+                    s.name.toLowerCase().includes(searchTerm) || 
+                    s.student_id.toLowerCase().includes(searchTerm)
+                );
+                
+                if (student) {
+                    generateScorecard(student);
+                } else {
+                    alert("Student not found!");
+                }
+            });
+
+            // Function to generate scorecard on the page
+            function generateScorecard(student) {
+                const container = document.getElementById("student-details");
+                container.innerHTML = '';  // Clear previous content
+
+                const { name, student_id, school, category, year, research_proposal_title, research_paper, proposal_comment, presentation_comment } = student;
+                const paperScores = research_paper;
+                const presentationScores = paperScores.presentation;
+
+                // Calculate total Research Paper score
+                const researchPaperScore = calculateScore(paperScores.research_problem, paperScores.existing_literature, paperScores.research_question, paperScores.methodology, paperScores.research_topic, paperScores.quality_of_writing);
+
+                // Calculate total Presentation score
+                const presentationScore = calculateScore(presentationScores.persuasiveness, presentationScores.video_quality, presentationScores.research_problem, presentationScores.research_question, presentationScores.methodology);
+
+                // Apply plagiarism penalty
+                const plagiarismPenalty = calculatePlagiarismPenalty(paperScores.plagiarism_check_percentile);
+
+                // Calculate Submission Score
+                const submissionScore = researchPaperScore + presentationScore;
+
+                // Final score after penalty
+                const finalScore = Math.floor(submissionScore - plagiarismPenalty);
+
+                // Plagiarism adjusted score
+                const plagiarismAdjustedScore = submissionScore - plagiarismPenalty;
+
+                // Add content to the page
+                container.innerHTML = `
+                    <h1>Student Marksheet</h1>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Student ID:</strong> ${student_id}</p>
+                    <p><strong>School:</strong> ${school}</p>
+                    <p><strong>Category:</strong> ${category} | <strong>Year:</strong> ${year}</p>
+                    <p class="proposal-title"><strong>Research Proposal Title:</strong> ${research_proposal_title}</p>
+
+                    <div class="section-title">Research Paper Score: ${researchPaperScore}/100</div>
+                    <table>
+                        <thead>
+                            <tr><th>Criteria</th><th>Student Obtained Marks</th><th>Full Marks</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Research Problem</td><td>${paperScores.research_problem}</td><td>20</td></tr>
+                            <tr><td>Existing Literature</td><td>${paperScores.existing_literature}</td><td>10</td></tr>
+                            <tr><td>Research Question</td><td>${paperScores.research_question}</td><td>25</td></tr>
+                            <tr><td>Methodology</td><td>${paperScores.methodology}</td><td>25</td></tr>
+                            <tr><td>Research Topic</td><td>${paperScores.research_topic}</td><td>15</td></tr>
+                            <tr><td>Quality of Writing</td><td>${paperScores.quality_of_writing}</td><td>5</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="section-title">Presentation Score: ${presentationScore}/100</div>
+                    <table>
+                        <thead>
+                            <tr><th>Criteria</th><th>Student Obtained Marks</th><th>Full Marks</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Persuasiveness</td><td>${presentationScores.persuasiveness}</td><td>20</td></tr>
+                            <tr><td>Video Quality</td><td>${presentationScores.video_quality}</td><td>20</td></tr>
+                            <tr><td>Research Problem</td><td>${presentationScores.research_problem}</td><td>20</td></tr>
+                            <tr><td>Research Question</td><td>${presentationScores.research_question}</td><td>20</td></tr>
+                            <tr><td>Methodology</td><td>${presentationScores.methodology}</td><td>20</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="section-title">Final Submission Score: ${finalScore}/200</div>
+                    <div class="section-title">Plagiarism Penalty: ${plagiarismPenalty}</div>
+
+                    <p><strong>Proposal Comment:</strong> ${proposal_comment}</p>
+                    <p><strong>Presentation Comment:</strong> ${presentation_comment}</p>
+                    <p><strong>Research Paper:</strong> <a href="${student.viewProposal}" target="_blank">View Proposal</a></p>
+                    <p><strong>Video Pitch:</strong> <a href="${student.videoPitch}" target="_blank">View Pitch</a></p>
+                `;
+            }
+
+            // Helper function to calculate total score from individual criteria
+            function calculateScore(...criteria) {
+                return criteria.reduce((acc, score) => acc + score, 0);
+            }
+
+            // Helper function to calculate plagiarism penalty
+            function calculatePlagiarismPenalty(percentile) {
+                return percentile >= 15 ? 5 : 0;
+            }
+        });
+    </script>
+</body>
+</html>
