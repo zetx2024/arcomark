@@ -5,7 +5,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Marksheet</title>
     <style>
-        /* CSS styles are unchanged */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 32px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .score-info {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .score-info div {
+            width: 48%;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            margin: 20px 0;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .comment-section {
+            margin-top: 30px;
+        }
+
+        .comment-section h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .comment-section p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .proposal-title {
+            
+            font-size: 16px;
+           
+        }
+
+        @media screen and (max-width: 768px) {
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .score-info {
+                flex-direction: column;
+            }
+
+            .score-info div {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -24,7 +141,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            let studentsData = [];
+             let studentsData = [];
 
             // Fetch student data from JSON file
             fetch('finalist2024.json')
@@ -38,7 +155,7 @@
             // Search function for students
             document.getElementById("search-btn").addEventListener("click", function () {
                 const searchTerm = document.getElementById("student-search").value.toLowerCase();
-                const student = studentsData.find(s => 
+                const student = studentsData.students.find(s => 
                     s.name.toLowerCase().includes(searchTerm) || 
                     s.student_id.toLowerCase().includes(searchTerm)
                 );
@@ -55,7 +172,7 @@
                 const container = document.getElementById("student-details");
                 container.innerHTML = '';  // Clear previous content
 
-                const { name, student_id, school, category, year, research_proposal_title, research_paper, proposal_comment, presentation_comment } = student;
+                const { name, student_id, institution, category, year, research_proposal_title, research_paper, proposal_comment, presentation_comment } = student;
                 const paperScores = research_paper;
                 const presentationScores = paperScores.presentation;
 
@@ -82,7 +199,7 @@
                     <h1>Student Marksheet</h1>
                     <p><strong>Name:</strong> ${name}</p>
                     <p><strong>Student ID:</strong> ${student_id}</p>
-                    <p><strong>School:</strong> ${school}</p>
+                    <p><strong>Institution:</strong> ${institution}</p>
                     <p><strong>Category:</strong> ${category} | <strong>Year:</strong> ${year}</p>
                     <p class="proposal-title"><strong>Research Proposal Title:</strong> ${research_proposal_title}</p>
 
@@ -115,24 +232,55 @@
                         </tbody>
                     </table>
 
-                    <div class="section-title">Final Submission Score: ${finalScore}/200</div>
-                    <div class="section-title">Plagiarism Penalty: ${plagiarismPenalty}</div>
+                    <div class="score-info">
+                        <div>
+                            <h3>Plagiarism Check</h3>
+                            <p><strong>Plagiarism Percentile:</strong> ${paperScores.plagiarism_check_percentile}%</p>
+                            <p><strong>Plagiarism Penalty:</strong> ${plagiarismPenalty}</p>
+                            <p><strong>Plagiarism Adjusted Score:</strong> ${submissionScore} - ${plagiarismPenalty} = ${plagiarismAdjustedScore} </p>
+                        </div>
+                        <div>
+                            <h3>Submission Score (Research + Presentation)</h3>
+                            <p><strong>Submission Score:</strong> ${researchPaperScore} + ${presentationScore} = ${submissionScore}/200</p>
+                        </div>
+                    </div>
 
-                    <p><strong>Proposal Comment:</strong> ${proposal_comment}</p>
-                    <p><strong>Presentation Comment:</strong> ${presentation_comment}</p>
-                    <p><strong>Research Paper:</strong> <a href="${student.viewProposal}" target="_blank">View Proposal</a></p>
-                    <p><strong>Video Pitch:</strong> <a href="${student.videoPitch}" target="_blank">View Pitch</a></p>
+                    <div class="score-info">
+                        <div>
+                            <h3>Final Score</h3>
+                            <p><strong>Final Score:</strong> ${finalScore}</p>
+                        </div>
+                    </div>
+
+                    <div class="comment-section">
+                        <h3>Proposal Comment:</h3>
+                        <p>${proposal_comment}</p>
+                        <h3>Presentation Comment:</h3>
+                        <p>${presentation_comment}</p>
+                    </div>
                 `;
             }
 
-            // Helper function to calculate total score from individual criteria
-            function calculateScore(...criteria) {
-                return criteria.reduce((acc, score) => acc + score, 0);
+            // Function to calculate the score based on the sum of individual criteria
+            function calculateScore(...scores) {
+                return scores.reduce((acc, score) => acc + score, 0);
             }
 
-            // Helper function to calculate plagiarism penalty
-            function calculatePlagiarismPenalty(percentile) {
-                return percentile >= 15 ? 5 : 0;
+            // Function to calculate plagiarism penalty based on percentile
+            function calculatePlagiarismPenalty(plagiarismPercentile) {
+                let penalty = 0;
+
+                if (plagiarismPercentile >= 0 && plagiarismPercentile <= 5) {
+                    penalty = 15; // High penalty
+                } else if (plagiarismPercentile >= 6 && plagiarismPercentile <= 20) {
+                    penalty = 0;  // No penalty
+                } else if (plagiarismPercentile >= 21 && plagiarismPercentile <= 30) {
+                    penalty = 20; // Moderate penalty
+                } else if (plagiarismPercentile > 30) {
+                    penalty = 30; // High penalty
+                }
+
+                return penalty;
             }
         });
     </script>
