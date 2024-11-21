@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Data JSON Generator</title>
     <style>
-      body {
+        body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -81,7 +81,8 @@ button:hover {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <script>
-      document.getElementById("generate-json-btn").addEventListener("click", generateJSON);
+
+        document.getElementById("generate-json-btn").addEventListener("click", generateJSON);
 document.getElementById("copy-btn").addEventListener("click", copyToClipboard);
 
 function generateJSON() {
@@ -110,38 +111,38 @@ function generateJSON() {
 
 function formatStudentData(row) {
     return {
-        student_id: row["Student ID"],
-        name: row["Name"],
-        school: row["School"],
-        category: row["Category"],
-        year: row["Year"],
-        country: row["Country"],
-        research_proposal_title: row["Research Proposal Title"],
+        student_id: row["student_id"],
+        name: row["name"],
+        school: row["school"],
+        category: row["category"],
+        year: row["year"],
+        country: row["country"],
+        research_proposal_title: row["research_proposal_title"],
         research_paper: {
-            research_problem: row["Research Problem"] || 0,
-            existing_literature: row["Existing Literature"] || 0,
-            research_question: row["Research Question"] || 0,
-            methodology: row["Methodology"] || 0,
-            research_topic: row["Research Topic"] || 0,
-            quality_of_writing: row["Quality of Writing"] || 0,
-            plagiarism_check_percentile: row["Plagiarism Check Percentile"] || 0,
+            research_problem: row["paperScores.research_problem"] || 0,
+            existing_literature: row["paperScores.existing_literature"] || 0,
+            research_question: row["paperScores.research_question"] || 0,
+            methodology: row["paperScores.methodology"] || 0,
+            research_topic: row["paperScores.research_topic"] || 0,
+            quality_of_writing: row["paperScores.quality_of_writing"] || 0,
+            plagiarism_check_percentile: row["plagiarism_check_percentile"] || 0,
             presentation: {
-                persuasiveness: row["Persuasiveness"] || 0,
-                video_quality: row["Video Quality"] || 0,
-                research_problem: row["Research Problem Presentation"] || 0,
-                research_question: row["Research Question Presentation"] || 0,
-                methodology: row["Methodology Presentation"] || 0
+                persuasiveness: row["presentationScores.persuasiveness"] || 0,
+                video_quality: row["presentationScores.video_quality"] || 0,
+                research_problem: row["presentationScores.research_problem"] || 0,
+                research_question: row["presentationScores.research_question"] || 0,
+                methodology: row["presentationScores.methodology"] || 0
             }
         },
-        plagiarismPenalty: row["Plagiarism Penalty"] || 0,
-        researchPaperScore: row["Research Paper Score"] || 0,
-        presentationScore: row["Presentation Score"] || 0,
-        submissionScore: row["Submission Score"] || 0,
-        scaledFinalScore: row["Scaled Final Score"] || 0,
-        viewProposal: row["View Proposal"] || "",
-        videoPitch: row["Video Pitch"] || "",
-        proposal_comment: row["Proposal Comment"] || "No Comment.",
-        presentation_comment: row["Presentation Comment"] || "No Comment."
+        plagiarismPenalty: row["plagiarismPenalty"] || 0,
+        researchPaperScore: row["researchPaperScore"] || 0,
+        presentationScore: row["presentationScore"] || 0,
+        submissionScore: row["submissionScore"] || 0,
+        scaledFinalScore: row["scaledFinalScore"] || 0,
+        viewProposal: row["viewProposal"] || "",
+        videoPitch: row["videoPitch"] || "",
+        proposal_comment: row["proposal_comment"] || "No Comment.",
+        presentation_comment: row["presentation_comment"] || "No Comment."
     };
 }
 
